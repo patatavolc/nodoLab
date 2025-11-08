@@ -1,5 +1,5 @@
 {
-  // Tabulaciones: 4 espacios fijos
+    // Tabulaciones: 4 espacios fijos
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,

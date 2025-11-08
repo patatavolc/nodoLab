@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "esbenp.prettier-vscode", // formateador de codigo
+        "ckolkman.vscode-postgres", // Postgres
+        "christian-kohler.path-intellisense", // autocompletado de rutas
+        "ms-vscode.live-server", // vista previa para frontend
+        "oderwat.indent-rainbow", // tabulaciones mas claras
+        "donjayamanne.git-extension-pack", // Git
+        "usernamehw.errorlens", // muestra errores y advertencias en linea
+        "BracketPairColorDLW.bracket-pair-color-dlw", // colorea pares de llaves
+        "aaron-bond.better-comments", // comentarios mas legibles
+        "formulahendry.auto-rename-tag" // renombra etiquetas HTML en pareja
+    ]
+}
