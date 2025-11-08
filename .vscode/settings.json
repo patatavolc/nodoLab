@@ -1,0 +1,38 @@
+{
+  // Tabulaciones: 4 espacios fijos
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+
+    // Limpieza automatica
+    "files.trimTrailingWhitespace": true,       // elimina espacios al final de linea
+    "files.insertFinalNewline": true,           // asegura salto de linea al final
+    "files.autoSave": "afterDelay",             // guarda a los 3 segundos automaticamente
+    "files.autoSaveDelay": 3000,
+
+    // Formateo
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,                // formatea al guardar
+    "prettier.singleQuote": true,               // comillas simples para strings
+    "prettier.trailingComma": "es5",            // coma final en objetos/arrays
+    "prettier.semi": true,                      // punto y coma
+    "prettier.printWidth": 100,                 // ancho maximo de linea
+
+    // Resaltado y comentarios
+    "better-comments.highlightPlainText": true,
+
+    // Deteccion de errores
+    "errorLens.enabled": true,                  // muestra errores directamente en la linea
+    "errorLens.fontStyleItalic": false,
+
+    // Control de llaves y etiquetas
+    "editor.bracketPairColorization.enabled": true,
+    "auto-rename-tag.activationOnLanguage": [
+        "html",
+        "jsx",
+        "js",
+    ],
+
+    // IntelliSense de rutas
+    "path-intellisense.autoSlashAfterDirectory": true,
+}
