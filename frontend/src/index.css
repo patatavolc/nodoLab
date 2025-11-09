@@ -19,16 +19,19 @@
 }
 
 /* Fuente */
-body, .font-display {
-  font-family: 'Manrope', sans-serif;
+body,
+.font-display {
+  font-family: "Manrope", sans-serif;
 }
 
 /* Dark mode por defecto */
-html.dark { background-color: var(--background-dark); color: var(--gray-200); }
-
+html.dark {
+  background-color: var(--background-dark);
+  color: var(--gray-200);
+}
 
 .input-custom {
-  @apply h-14 w-full rounded-lg border border-gray-300 bg-white p-4 text-base leading-normal placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)];
+  @apply h-14 w-full rounded-lg border border-gray-300 bg-white dark:bg-(--background-dark) p-4 text-base leading-normal placeholder-gray-400 text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)];
 }
 
 .input-password-container {
@@ -36,13 +39,12 @@ html.dark { background-color: var(--background-dark); color: var(--gray-200); }
 }
 
 .input-password {
-  @apply h-14 w-full rounded-l-lg border border-r-0 border-gray-300 bg-white p-4 pr-2 text-base placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)];
+  @apply h-14 w-full rounded-l-lg border border-r-0 border-gray-300 bg-white dark:bg-(--background-dark) p-4 pr-2 text-base placeholder-gray-400 text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)];
 }
 
 .input-password-toggle {
-  @apply flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 border-gray-300 bg-white px-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
+  @apply flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 border-gray-300 bg-white dark:bg-(--background-dark) px-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
 }
-
 
 .button-primary {
   @apply h-14 w-full rounded-lg bg-[var(--primary)] text-white font-bold transition-colors hover:bg-[var(--primary)/90] focus:outline-none focus:ring-2 focus:ring-[var(--primary)];

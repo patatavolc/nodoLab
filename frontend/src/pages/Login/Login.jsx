@@ -1,23 +1,15 @@
 // src/pages/Login.jsx
 import React from "react";
 import "../../index.css";
+import InputForm from "../../components/InputForm/InputForm";
 
 export default function Login() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-(--background-light) dark:bg-(--background-dark) font-display text-gray-800 dark:text-gray-200">
-      <div className="flex h-full grow flex-col">
+    <div className="relative flex  w-full bg-(--background-light) dark:bg-(--background-dark) font-display text-gray-800 dark:text-gray-200">
+      <div className="flex  grow flex-col">
         <div className="flex flex-1 flex-columns">
           {/* Left Column */}
-          <div className="left-column">
-            <div
-              className="bg-cover-center"
-              style={{
-                backgroundImage:
-                  "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYY_rJQfSm9a7CPmtwOoDsIBVLvLWSDmCRBAlV23j5kOJXPVEeeiEVxJbyaFh2Kj6qayxwT1f_zb2wd01_t_Ychjx41poQQleRFSTX-obLvqenVvDzpprzhc3HBwI8XhTQlio6WHd9xOQmvGF566PhS5L4O9tTDes5L5X6ubodOpL-DebNO6dz9rQe97QMKail54wF4BqAg-86rMt09lk-G1787VT8g5knGYRpmBkKYqvQjASfNB04DTxeulgri-H1MPL_j6A-VDjs')",
-              }}
-            >
-              <div className="bg-overlay"></div>
-            </div>
+          <div className="left-column text-justify">
             <div className="relative z-10 flex flex-col items-start p-12 text-white max-w-lg">
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--primary)">
@@ -53,44 +45,7 @@ export default function Login() {
                 <p className="text-login-subtitle">Log in to manage your NodoLab account</p>
               </div>
 
-              {/* Form */}
-              <form className="flex flex-col gap-5">
-                <label className="flex flex-col">
-                  <p className="pb-2 text-base font-medium leading-normal text-gray-800 dark:text-gray-200">
-                    Email Address
-                  </p>
-                  <input className="input-custom" placeholder="you@example.com" type="email" />
-                </label>
-
-                <label className="flex flex-col">
-                  <p className="pb-2 text-base font-medium leading-normal text-gray-800 dark:text-gray-200">
-                    Password
-                  </p>
-                  <div className="input-password-container">
-                    <input
-                      className="input-password"
-                      placeholder="Enter your password"
-                      type="password"
-                    />
-                    <div className="input-password-toggle">
-                      <span className="material-symbols-outlined text-2xl">visibility_off</span>
-                    </div>
-                  </div>
-                </label>
-
-                <div className="flex justify-end">
-                  <a
-                    className="text-sm font-medium leading-normal text-(--primary) hover:underline"
-                    href="#"
-                  >
-                    Forgot Password?
-                  </a>
-                </div>
-
-                <button type="submit" className="button-primary">
-                  Log In
-                </button>
-              </form>
+              <InputForm />
 
               <div className="mt-8 text-center">
                 <p className="text-sm text-gray-500 dark:text-gray-400">
