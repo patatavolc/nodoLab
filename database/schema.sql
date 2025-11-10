@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS usuarios CASCADE;
 CREATE TABLE usuarios (
-    id_usuario_dni SERIAL PRIMARY KEY,
+    id_usuario_dni VARCHAR(9) PRIMARY KEY,
     rol VARCHAR(50) NOT NULL CHECK (rol IN ('admin', 'empleado', 'cliente')),
     nombre_completo VARCHAR(150) NOT NULL,
     username VARCHAR(100) UNIQUE NOT NULL,
