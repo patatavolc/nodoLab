@@ -6,7 +6,8 @@ CREATE TABLE usuarios (
     username VARCHAR(100) UNIQUE NOT NULL,
     telefono VARCHAR(20),
     email VARCHAR(100) UNIQUE NOT NULL,
-    contraseña VARCHAR(255) NOT NULL
+    password_hash VARCHAR(255) NOT NULL,
+    salt VARCHAR(32) NOT NULL
 );
 
 DROP TABLE IF EXISTS datos_bancarios CASCADE;
