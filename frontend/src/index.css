@@ -1,83 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
 @import "tailwindcss";
 
+/* -----------------------------------------------------
+ * TOKENS DE DISEÑO PERSONALIZADOS (Tema Oscuro Único)
+ * -----------------------------------------------------
+ */
 :root {
-  --primary: #137fec;
-  --background-light: #f6f7f8;
-  --background-dark: #101922;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-700: #374151;
-  --gray-800: #1f2937;
-  --gray-900: #111827;
+    /* Fuente */
+    --font-display: 'Manrope', sans-serif;
 
-  --radius-default: 0.25rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-full: 9999px;
+    /* Colores base (Ahora son los colores oscuros por defecto) */
+    --color-primary: #137fec;
+    --color-background-base: #101922; 
+    --color-form-bg: #1f2937; /* Asumimos un gris oscuro para los inputs (gray-800) */
+    --color-text-main: #f3f4f6; /* Gris claro para el texto principal (gray-100) */
+    
+    font-family: var(--font-display);
+    /* Forzamos el color de fondo a ser el oscuro en la raíz */
+    background-color: var(--color-background-base); 
 }
 
-/* Fuente */
-body,
-.font-display {
-  font-family: "Manrope", sans-serif;
-}
+/* El tema oscuro es ahora el tema principal. No necesitamos el selector .dark {} */
 
-/* Dark mode por defecto */
-html.dark {
-  background-color: var(--background-dark);
-  color: var(--gray-200);
+/* Clases de borde personalizadas */
+.rounded-xl {
+    border-radius: 0.75rem;
 }
-
-.input-custom {
-  @apply h-14 w-full rounded-lg border border-gray-300 bg-white dark:bg-(--background-dark) p-4 text-base leading-normal placeholder-gray-400 text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)];
-}
-
-.input-password-container {
-  @apply flex w-full items-stretch;
-}
-
-.input-password {
-  @apply h-14 w-full rounded-l-lg border border-r-0 border-gray-300 bg-white dark:bg-(--background-dark) p-4 pr-2 text-base placeholder-gray-400 text-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)];
-}
-
-.input-password-toggle {
-  @apply flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 border-gray-300 bg-white dark:bg-(--background-dark) px-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
-}
-
-.button-primary {
-  @apply h-14 w-full rounded-lg bg-[var(--primary)] text-white font-bold transition-colors hover:bg-[var(--primary)/90] focus:outline-none focus:ring-2 focus:ring-[var(--primary)];
-}
-
-.flex-columns {
-  @apply flex flex-col lg:flex-row w-full;
-}
-
-.left-column {
-  @apply hidden lg:flex lg:w-1/2 flex-col items-center justify-center bg-gray-900 relative;
-}
-
-.right-column {
-  @apply flex w-full lg:w-1/2 flex-col items-center justify-center p-6 lg:p-12 bg-[var(--background-light)] dark:bg-[var(--background-dark)];
-}
-
-.max-form-width {
-  @apply w-full max-w-md;
-}
-
-.bg-cover-center {
-  @apply absolute inset-0 bg-cover bg-center;
-}
-
-.bg-overlay {
-  @apply absolute inset-0 bg-black/50;
-}
-
-.text-login-title {
-  @apply text-4xl font-black leading-tight tracking-[-0.033em] text-gray-900 dark:text-white;
-}
-
-.text-login-subtitle {
-  @apply mt-2 text-base text-gray-500 dark:text-gray-400;
+.rounded-lg {
+    border-radius: 0.5rem;
 }

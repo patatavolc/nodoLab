@@ -1,59 +1,93 @@
-// src/pages/Login.jsx
 import React from "react";
-import "../../index.css";
-import InputForm from "../../components/InputForm/InputForm";
+import AuthSidebar from "../../components/AuthSidebar.jsx";
+import InputGroup from "../../components/InputGroup.jsx";
 
-export default function Login() {
+const LoginPage = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Formulario de Login enviado.");
+  };
+
   return (
-    <div className="relative flex  w-full bg-(--background-light) dark:bg-(--background-dark) font-display text-gray-800 dark:text-gray-200">
-      <div className="flex  grow flex-col">
-        <div className="flex flex-1 flex-columns">
-          {/* Left Column */}
-          <div className="left-column text-justify">
-            <div className="relative z-10 flex flex-col items-start p-12 text-white max-w-lg">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--primary)">
-                  <span className="material-symbols-outlined text-3xl text-white">lan</span>
+    // CLASE BASE: Usamos bg-background-base y el color de texto claro (gray-200) por defecto
+    <div className="bg-background-base font-display text-gray-200 min-h-screen w-full">
+      <div className="flex h-full grow flex-col min-h-screen">
+        <div className="flex flex-1 min-h-screen">
+          <div className="flex w-full flex-col lg:flex-row min-h-screen">
+            {/* Columna Izquierda (Branding) */}
+            <AuthSidebar />
+
+            {/* Columna Derecha (Formulario) */}
+            <div className="flex w-full flex-col items-center justify-center bg-background-base p-6 lg:w-1/2 lg:p-12">
+              <div className="w-full max-w-md">
+                {/* Mobile Logo */}
+                <div className="mb-8 flex items-center justify-center gap-3 lg:hidden">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                    <span className="material-symbols-outlined text-2xl text-white">
+                      lan
+                    </span>
+                  </div>
+                  <h1 className="font-display text-3xl font-bold text-white">
+                    NodoLab
+                  </h1>
                 </div>
-                <h1 className="font-display text-4xl font-bold">NodoLab</h1>
-              </div>
-              <p className="mt-6 font-display text-4xl font-extrabold leading-tight tracking-tight">
-                Your Space to Create and Connect.
-              </p>
-              <p className="mt-4 text-lg text-gray-300">
-                Manage your workspace, billing, and community all in one place.
-              </p>
-            </div>
-          </div>
 
-          {/* Right Column */}
-          <div className="right-column">
-            <div className="max-form-width">
-              {/* Mobile Logo */}
-              <div className="mb-8 flex items-center justify-center gap-3 lg:hidden">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-(--primary)">
-                  <span className="material-symbols-outlined text-2xl text-white">lan</span>
+                {/* Encabezado */}
+                <div className="mb-8 text-center lg:text-left">
+                  {/* Forzamos el texto a blanco para el contraste */}
+                  <h2 className="text-4xl font-black leading-tight tracking-[-0.033em] text-white">
+                    Welcome Back
+                  </h2>
+                  <p className="mt-2 text-base font-normal leading-normal text-gray-400">
+                    Log in to manage your NodoLab account
+                  </p>
                 </div>
-                <h1 className="font-display text-3xl font-bold text-gray-900 dark:text-white">
-                  NodoLab
-                </h1>
-              </div>
 
-              {/* Heading */}
-              <div className="mb-8 text-center lg:text-left">
-                <h2 className="text-login-title">Welcome Back</h2>
-                <p className="text-login-subtitle">Log in to manage your NodoLab account</p>
-              </div>
+                {/* Formulario */}
+                <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+                  <InputGroup
+                    label="Email Address"
+                    type="email"
+                    placeholder="you@example.com"
+                  />
+                  <InputGroup
+                    label="Password"
+                    type="password"
+                    placeholder="Enter your password"
+                  />
 
-              <InputForm />
+                  {/* Enlace de Contraseña Olvidada */}
+                  <div className="flex justify-end">
+                    <a
+                      className="text-sm font-medium leading-normal text-primary hover:underline"
+                      href="#"
+                    >
+                      Forgot Password?
+                    </a>
+                  </div>
 
-              <div className="mt-8 text-center">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Need an account?{" "}
-                  <a className="font-medium text-(--primary) hover:underline" href="#">
-                    Contact Support
-                  </a>
-                </p>
+                  {/* Botón de Login */}
+                  <button
+                    className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white 
+                    border transition-colors hover:bg-(--color-primary) focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-base"
+                    type="submit"
+                  >
+                    Log In
+                  </button>
+                </form>
+
+                {/* Pie de Formulario */}
+                <div className="mt-8 text-center">
+                  <p className="text-sm text-gray-400">
+                    Need an account?{" "}
+                    <a
+                      className="font-medium text-primary hover:underline"
+                      href="#"
+                    >
+                      Contact Support
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -61,4 +95,6 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginPage;
