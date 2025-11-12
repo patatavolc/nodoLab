@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getDatosBancarios, createDatosBancarios, updateDatosBancarios} = require('../controllers/datosBancarios.controller');
+const { getDatosBancarios, createDatosBancarios, updateDatosBancarios, getDatosBancariosByDni} = require('../controllers/datosBancarios.controller');
 
 router.get('/datosBancarios', getDatosBancarios);
 router.get('/datosBancarios/:id', getDatosBancariosByDni);
