@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express'; 
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -13,4 +13,4 @@ router.get('/usuario/:id', (req, res) => {
     res.status(200).send(`Buscando información para el usuario con ID: ${userId}`);
 });
 
-module.exports = router;
+export default router;

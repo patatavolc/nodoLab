@@ -1,16 +1,14 @@
-const jwt = require('jsonwebtoken'); 
-const JWT_SECRET = process.env.JWT_SECRET;
+import jwt from 'jsonwebtoken'; 
+
+// Acceder a las variables de entorno se hace a través de process.env
+const JWT_SECRET = process.env.JWT_SECRET; 
 
 if (!JWT_SECRET) {
-    //modificar
     console.error("FATAL ERROR: JWT_SECRET no está definido en las variables de entorno.");
-    
 }
 
-
-module.exports = (socket, next) => {
+export default (socket, next) => {
     
-    // Obtener token
     const token = socket.handshake.query.token;
 
     if (!token) {
@@ -20,7 +18,7 @@ module.exports = (socket, next) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET); 
         
-        //Adjunta el userId 
+        // Se añade el userId al socket
         socket.userId = decoded.userId; 
         next();
 

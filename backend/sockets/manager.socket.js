@@ -1,11 +1,11 @@
-const registerChatHandlers = require('./chatHandlers.socket');
-const authMiddleware = require('../middleware/socket.middleware');
+import registerChatHandlers from './chatHandlers.socket.js';
+import authMiddleware from '../middleware/socket.middleware.js'; 
 const activeUsers = {};
 
-function initializeSocket(io) {
+export default function initializeSocket(io) {
     io.use(authMiddleware);
 
-    //Escucha la primera conexión de un cliente
+    // Escucha la primera conexión de un cliente
     io.on('connection', (socket) => {
         
         const userId = socket.userId; 
@@ -15,7 +15,7 @@ function initializeSocket(io) {
 
         registerChatHandlers(io, socket, activeUsers);
 
-        //  Desconectar
+        // Desconectar
         socket.on('disconnect', () => {
             console.log("[Socket] Cliente desconectado: " + socket.id);
             
@@ -27,5 +27,3 @@ function initializeSocket(io) {
         });
     });
 }
-
-module.exports = initializeSocket;

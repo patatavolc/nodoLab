@@ -1,7 +1,8 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const initializeSocket = require('./sockets/manager.socket');
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
+import initializeSocket from'./sockets/manager.socket';
+import pruebaRoutes from './routes/prueba';
 
 const app = express();
 const PORT = 3000;
@@ -18,7 +19,6 @@ const io = new Server(server, {
 
 initializeSocket(io);
 
-const pruebaRoutes = require('./routes/prueba');
 
 app.use(express.json());
 
