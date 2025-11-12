@@ -6,7 +6,7 @@ import {getPagos, getPagoById, getPagosIdReserva, getReservasByMetodoPago, creat
 router.get('/pagos', getPagos);
 router.get('/pagos/:id', getPagoById);
 router.get('/pagos/:idReserva', getPagosIdReserva);
-router.get('/pagos/:metodoPago', getReservasByMetodoPago);
+router.get('/pagos/:metodoPago', getPagosByMetodoPago);
 router.post('/pagos', createPago);
 router.put('/pagos', updatePago);
 
