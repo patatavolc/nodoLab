@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const { getUsuarios, createUsuario, updateUsuario, getUsuariosByDni} = require('../controllers/usuarios.controller');
+import { getUsuarios, createUsuario, updateUsuario, getUsuariosByDni} from '../controllers/usuarios.controller.js'; 
 
 router.get('/usuarios', getUsuarios);
 router.get('/usuarios/:id', getUsuariosByDni);
 router.post('/usuarios', createUsuario);
 router.put('/usuarios/:id', updateUsuario);
 
-module.exports = router;
+export default router; 
