@@ -9,6 +9,7 @@ import pagosRoutes from './pagos.routes.js';
 import facturasRoutes from './facturas.routes.js';
 import detallesFacturasRoutes from './detallesFacturas.routes.js';
 import mensajesRoutes from './mensajes.routes.js';
+import logsRoutes from './logs.routes.js';
 
 router.use(usuariosRoutes);
 router.use(datosBancariosRoutes);
@@ -18,5 +19,6 @@ router.use(pagosRoutes);
 router.use(facturasRoutes);
 router.use(detallesFacturasRoutes);
 router.use(mensajesRoutes);
+router.use(logsRoutes);
 
 export default router; 
