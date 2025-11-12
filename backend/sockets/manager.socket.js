@@ -1,5 +1,4 @@
-const registerChatHandlers = require('./chat.socket');
-
+const registerChatHandlers = require('./chatHandlers.socket');
 const users = {};
 
 function initializeSocket(io) {
