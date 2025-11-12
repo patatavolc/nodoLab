@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const { getDatosBancarios, createDatosBancarios, updateDatosBancarios, getDatosBancariosByDni} = require('../controllers/datosBancarios.controller');
+import { getDatosBancarios, createDatosBancarios, updateDatosBancarios, getDatosBancariosByDni } from '../controllers/datosBancarios.controller.js'; 
 
 router.get('/datosBancarios', getDatosBancarios);
 router.get('/datosBancarios/:id', getDatosBancariosByDni);
 router.post('/datosBancarios', createDatosBancarios);
 router.put('/datosBancarios/:id', updateDatosBancarios);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express'; 
 const router = express.Router();
 
-const { getRecursos, getRecursosById, createRecursos, updateRecursos, getRecursosByTipo} = require('../controllers/recursos.controller');
+import { getRecursos, getRecursosById, createRecursos, updateRecursos, getRecursosByTipo} from '../controllers/recursos.controller.js'; 
 
 router.get('/recursos', getRecursos);
 router.get('/recursos/:id', getRecursosById);
@@ -9,4 +9,4 @@ router.get('/recursos/:tipo', getRecursosByTipo);
 router.post('/recursos', createRecursos);
 router.put('/recursos/:id', updateRecursos);
 
-module.exports = router;
+export default router;

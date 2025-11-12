@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const {getReservas, getReservaId, getReservaByDni, postReserva, updateReserva, getReservaByFecha } = require('../controllers/reservas.controller');
+import { getReservas, getReservaId, getReservaByDni, postReserva, updateReserva, getReservaByFecha, getReservaByRecurso} from '../controllers/reservas.controller.js'; 
 
 router.get('/reservas', getReservas);
 router.get('/reservas/:id', getReservaId);
@@ -11,4 +11,4 @@ router.get('/reservas/:fecha', getReservaByFecha);
 router.post('/reservas', postReserva);
 router.put('/reservas', updateReserva);
 
-module.export = router;
+export default router; 
