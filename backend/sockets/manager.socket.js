@@ -1,24 +1,29 @@
 const registerChatHandlers = require('./chatHandlers.socket');
-const users = {};
+const authMiddleware = require('./auth.middleware');
+const activeUsers = {};
 
 function initializeSocket(io) {
-    
+    io.use(authMiddleware);
+
     //Escucha la primera conexión de un cliente
     io.on('connection', (socket) => {
-        console.log("[Socket] Nuevo cliente conectado: " + socket.id);
+        
+        const userId = socket.userId; 
 
-        // Segun usuario
-        socket.on('register', (userId) => {
-            users[userId] = socket.id;
-            console.log("Usuario  "+ userId + " registrado con socket ID: " + socket.id);
-        });
+        activeUsers[userId] = socket.id;
+        console.log("[Socket] Usuario " + userId +" conectado y autenticado con ID: " + socket.id);
 
-        registerChatHandlers(io, socket, users);
+        registerChatHandlers(io, socket, activeUsers);
 
-        // Desconectar
+        //  Desconectar
         socket.on('disconnect', () => {
             console.log("[Socket] Cliente desconectado: " + socket.id);
-
+            
+            // Quita de usuarios activos
+            if (activeUsers[userId]) {
+                delete activeUsers[userId];
+                console.log("Usuario " + userId + " eliminado del mapeo.");
+            }
         });
     });
 }
