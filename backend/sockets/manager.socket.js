@@ -1,5 +1,5 @@
 const registerChatHandlers = require('./chatHandlers.socket');
-const authMiddleware = require('./auth.middleware');
+const authMiddleware = require('../middleware/socket.middleware');
 const activeUsers = {};
 
 function initializeSocket(io) {
