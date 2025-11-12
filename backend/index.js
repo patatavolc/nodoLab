@@ -22,7 +22,7 @@ initializeSocket(io);
 
 app.use(express.json());
 
-app.use('/api/prueba', pruebaRoutes);
+app.use('/api/', mainRouter);
 
 app.get('/', (req, res) => {
     res.send('🚀 Servidor Express funcionando. Prueba la ruta /api/prueba');
