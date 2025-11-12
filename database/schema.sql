@@ -1,18 +1,19 @@
 DROP TABLE IF EXISTS usuarios CASCADE;
 CREATE TABLE usuarios (
-    id_usuario_dni SERIAL PRIMARY KEY,
+    id_usuario_dni VARCHAR(9) PRIMARY KEY,
     rol VARCHAR(50) NOT NULL CHECK (rol IN ('admin', 'empleado', 'cliente')),
     nombre_completo VARCHAR(150) NOT NULL,
     username VARCHAR(100) UNIQUE NOT NULL,
     telefono VARCHAR(20),
     email VARCHAR(100) UNIQUE NOT NULL,
-    contraseña VARCHAR(255) NOT NULL
+    password_hash VARCHAR(255) NOT NULL,
+    salt VARCHAR(32) NOT NULL
 );
 
 DROP TABLE IF EXISTS datos_bancarios CASCADE;
 CREATE TABLE datos_bancarios (
     id_dato_bancario SERIAL PRIMARY KEY,
-    id_usuario INT REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
+    id_usuario VARCHAR(9) REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
     IBAN VARCHAR(34),
     num_tarjeta VARCHAR(20),
     fecha_tarjeta DATE,
@@ -33,7 +34,7 @@ CREATE TABLE recursos (
 DROP TABLE IF EXISTS reservas CASCADE;
 CREATE TABLE reservas (
     id_reserva SERIAL PRIMARY KEY,
-    id_usuario INT REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
+    id_usuario VARCHAR(9) REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
     id_recurso INT REFERENCES recursos(id_recurso) ON DELETE CASCADE,
     fecha_inicio TIMESTAMP WITH TIME ZONE NOT NULL,
     fecha_fin TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -73,8 +74,8 @@ CREATE TABLE detalle_factura (
 DROP TABLE IF EXISTS mensajes CASCADE;
 CREATE TABLE mensajes (
     id_mensaje SERIAL PRIMARY KEY,
-    id_emisor INT REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
-    id_receptor INT REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
+    id_emisor VARCHAR(9) REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
+    id_receptor VARCHAR(9) REFERENCES usuarios(id_usuario_dni) ON DELETE CASCADE,
     fecha_mensaje TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     mensaje TEXT NOT NULL
 );
@@ -82,7 +83,7 @@ CREATE TABLE mensajes (
 DROP TABLE IF EXISTS logs CASCADE;
 CREATE TABLE logs (
     id_log SERIAL PRIMARY KEY,
-    id_usuario INT REFERENCES usuarios(id_usuario_dni) ON DELETE SET NULL,
+    id_usuario VARCHAR(9) REFERENCES usuarios(id_usuario_dni) ON DELETE SET NULL,
     fecha_log TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     metodo VARCHAR(10) NOT NULL,
     ip VARCHAR(45) NOT NULL,
