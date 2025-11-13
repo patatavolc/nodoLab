@@ -6,7 +6,7 @@ function App() {
     <>
       <Login />
     </>
-  )
+  );
 }
 
 export default App;
