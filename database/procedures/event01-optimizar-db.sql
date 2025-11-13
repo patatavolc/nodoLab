@@ -1,0 +1,15 @@
+CREATE OR REPLACE PROCEDURE optimize_db()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    EXECUTE 'VACUUM ANALYZE usuarios';
+    EXECUTE 'VACUUM ANALYZE datos_bancarios';
+    EXECUTE 'VACUUM ANALYZE recursos';
+    EXECUTE 'VACUUM ANALYZE reservas';
+    EXECUTE 'VACUUM ANALYZE pagos';
+    EXECUTE 'VACUUM ANALYZE facturas';
+    EXECUTE 'VACUUM ANALYZE detalle_factura';
+    EXECUTE 'VACUUM ANALYZE mensajes';
+    EXECUTE 'VACUUM ANALYZE logs';
+END;
+$$;
