@@ -1,8 +1,9 @@
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
-import initializeSocket from'./sockets/manager.socket';
-import pruebaRoutes from './routes/prueba';
+import initializeSocket from'./sockets/manager.socket.js';
+import mainRouter from './routes/mainRouter.js';
+import pruebaRoutes from './routes/prueba.js';
 
 const app = express();
 const PORT = 3000;
@@ -22,7 +23,7 @@ initializeSocket(io);
 
 app.use(express.json());
 
-app.use('/api/', mainRouter);
+app.use('/api', mainRouter);
 
 app.get('/', (req, res) => {
     res.send('🚀 Servidor Express funcionando. Prueba la ruta /api/prueba');
