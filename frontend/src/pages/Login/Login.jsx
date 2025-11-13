@@ -1,100 +1,97 @@
-import React from "react";
-import AuthSidebar from "../../components/AuthSidebar.jsx";
-import InputGroup from "../../components/InputGroup.jsx";
-
-const LoginPage = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Formulario de Login enviado.");
-  };
-
+export default function Example() {
   return (
-    // CLASE BASE: Usamos bg-background-base y el color de texto claro (gray-200) por defecto
-    <div className="bg-background-base font-display text-gray-200 min-h-screen w-full">
-      <div className="flex h-full grow flex-col min-h-screen">
-        <div className="flex flex-1 min-h-screen">
-          <div className="flex w-full flex-col lg:flex-row min-h-screen">
-            {/* Columna Izquierda (Branding) */}
-            <AuthSidebar />
+    <>
+      {/*
+        This example requires updating your template:
 
-            {/* Columna Derecha (Formulario) */}
-            <div className="flex w-full flex-col items-center justify-center bg-background-base p-6 lg:w-1/2 lg:p-12">
-              <div className="w-full max-w-md">
-                {/* Mobile Logo */}
-                <div className="mb-8 flex items-center justify-center gap-3 lg:hidden">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <span className="material-symbols-outlined text-2xl text-white">
-                      lan
-                    </span>
-                  </div>
-                  <h1 className="font-display text-3xl font-bold text-white">
-                    NodoLab
-                  </h1>
-                </div>
+        ```
+        <html class="h-full bg-white dark:bg-gray-900">
+        <body class="h-full">
+        ```
+      */}
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <div class="sm:mx-auto sm:w-2l sm:max-w-sm flex h-12 w-12 items-center justify-center rounded-xl bg-[#1A7EEB]">
+            <span class="material-symbols-outlined text-3xl text-white">
+              lan
+            </span>
+          </div>
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
+            Sign in to your account
+          </h2>
+        </div>
 
-                {/* Encabezado */}
-                <div className="mb-8 text-center lg:text-left">
-                  {/* Forzamos el texto a blanco para el contraste */}
-                  <h2 className="text-4xl font-black leading-tight tracking-[-0.033em] text-white">
-                    Welcome Back
-                  </h2>
-                  <p className="mt-2 text-base font-normal leading-normal text-gray-400">
-                    Log in to manage your NodoLab account
-                  </p>
-                </div>
-
-                {/* Formulario */}
-                <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-                  <InputGroup
-                    label="Email Address"
-                    type="email"
-                    placeholder="you@example.com"
-                  />
-                  <InputGroup
-                    label="Password"
-                    type="password"
-                    placeholder="Enter your password"
-                  />
-
-                  {/* Enlace de Contraseña Olvidada */}
-                  <div className="flex justify-end">
-                    <a
-                      className="text-sm font-medium leading-normal text-primary hover:underline"
-                      href="#"
-                    >
-                      Forgot Password?
-                    </a>
-                  </div>
-
-                  {/* Botón de Login */}
-                  <button
-                    className="flex h-14 w-full items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-white 
-                    border transition-colors hover:bg-(--color-primary) focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background-base"
-                    type="submit"
-                  >
-                    Log In
-                  </button>
-                </form>
-
-                {/* Pie de Formulario */}
-                <div className="mt-8 text-center">
-                  <p className="text-sm text-gray-400">
-                    Need an account?{" "}
-                    <a
-                      className="font-medium text-primary hover:underline"
-                      href="#"
-                    >
-                      Contact Support
-                    </a>
-                  </p>
-                </div>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form action="#" method="POST" className="space-y-6">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm/6 font-medium text-gray-900 dark:text-gray-100"
+              >
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                />
               </div>
             </div>
-          </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="password"
+                  className="block text-sm/6 font-medium text-gray-900 dark:text-gray-100"
+                >
+                  Password
+                </label>
+                <div className="text-sm">
+                  <a
+                    href="#"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+                  >
+                    Forgot password?
+                  </a>
+                </div>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  autoComplete="current-password"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500"
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+
+          <p className="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
+            Not a member?{" "}
+            <a
+              href="#"
+              className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+            >
+              Start a 14 day free trial
+            </a>
+          </p>
         </div>
       </div>
-    </div>
+    </>
   );
-};
-
-export default LoginPage;
+}
