@@ -1,33 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
 
 @import "tailwindcss";
 
-/* -----------------------------------------------------
- * TOKENS DE DISEÑO PERSONALIZADOS (Tema Oscuro Único)
- * -----------------------------------------------------
- */
-:root {
-    /* Fuente */
-    --font-display: 'Manrope', sans-serif;
-
-    /* Colores base (Ahora son los colores oscuros por defecto) */
-    --color-primary: #137fec;
-    --color-background-base: #101922; 
-    --color-form-bg: #1f2937; /* Asumimos un gris oscuro para los inputs (gray-800) */
-    --color-text-main: #f3f4f6; /* Gris claro para el texto principal (gray-100) */
-    
-    font-family: var(--font-display);
-    /* Forzamos el color de fondo a ser el oscuro en la raíz */
-    background-color: var(--color-background-base); 
-}
-
-/* El tema oscuro es ahora el tema principal. No necesitamos el selector .dark {} */
-
-/* Clases de borde personalizadas */
-.rounded-xl {
-    border-radius: 0.75rem;
-}
-.rounded-lg {
-    border-radius: 0.5rem;
+@theme {
+  --font-sans: InterVariable, sans-serif;
+  --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
