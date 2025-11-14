@@ -9,7 +9,7 @@ AS $$
     id_generado INTEGER;
 BEGIN
     FOR fila IN
-        SELECT subtotal, IVA, total FROM pagos JOIN detalle_factura ON pagos.id_pago = detalle_factura.id_pago WHERE fecha_pago::DATE = CURRENT_DATE
+        SELECT df.subtotal, df.IVA, df.total FROM pagos p JOIN detalle_factura df ON p.id_pago = df.id_pago WHERE p.fecha_pago::DATE = CURRENT_DATE
     LOOP
         bruto_total := bruto_total + fila.subtotal;
         iva_total := iva_total + fila.IVA;
