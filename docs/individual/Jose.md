@@ -50,14 +50,19 @@ schema.sql:
 
 - database/procedures/01-crear-usuario.sql (creado)
 - database/procedures/02-obtener-hash-salt.sql (creado)
+- database/procedures/03-obtener-recursos-disponibles (creado)
+- database/procedures/04-crear-nueva-reserva (creado)
 
 ### DESCRIPCION
 
 - He creado dos procedimientos que son esenciales para el registro de la aplicación. 
-El primero de ellos, 01-crear-usuario.sql, registra un nuevo usuario, funciona insertando una nueva fila en la tabla usuarios.
-El segundo de ellos, 02-obtener-hash-salt.sql, tras que un usuario haya escrito su username o email, la funcion devuelve el password_hash y el salt almacenados en la base de datos.
+    - 01-crear-usuario.sql => Registra un nuevo usuario, funciona insertando una nueva fila en la tabla usuarios.
+    - 02-obtener-hash-salt.sql => Tras que un usuario haya escrito su username o email, la funcion devuelve el password_hash y el salt almacenados en la base de datos.
+- Tras crear los dos primeros procedimientos de registro, me he puesto a crear el sistema de verificar la dispinibilidad y crear reservas.
+    - 03-obtener-recursos-disponibles => Se encarga de ver qué se puede reservar, filtrando y validando los datos.
+    - 04-crear-nueva-reserva => Trata de hacer una reserva, la cual valida anteriormente la disponibilidad.
 
-Estas funcionalidades las he implementado primeramente en la base de datos de postgresSQL y tras ver que funcionaba correctamente me he puesto a crearlos en el proyecto nodoLab en el VSCode.
+Estas funcionalidades las he implementado primeramente en la base de datos de postgresSQL y tras ver que funcionaba correctamente me he puesto a crearlos en el proyecto nodoLab con VSCode.
 
 ### OBSERVACIONES
 
