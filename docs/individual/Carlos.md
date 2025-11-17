@@ -81,15 +81,21 @@ backend/
         auth.js
     services/
         auth_service.js
+    middewares/
+    auth.middleware.js
+    index.js
 .vscode/
     settings.json
 
 ### DESCRIPCION
 He creado la ruta del login y su controlador. Tambien los servicios necesarios para que funcione. Un login correcto genera un token que se guarda en una cookie. Uno incorrecto devuelve null o false dependiendo de si la cuenta no se encuentra o si la contraseña es incorrecta.
 Tambien he añadido una linea para definir el tabSize de prettier al settings.json, ya que al guardar manualmente el tabSize base de prettier hacia override al de vscode.
+
+He creado el middleware que verifica y procesa el token para devolver req.user
 ### OBSERVACIONES
 La cookie y el token duran 30 dias. La cookie se llama "nodolab_auth_token".
 La cookie contiene un payload de usuario y fingerprint, y el fingerprint se forma a partir de el socket.remoteAddress y el User-Agent.
 La request que hay que mandar a /login ha de tener:
 req.logData = email o username
 req.password = contraseña
+Si pasa por el middleware correctamente, todos los datos del usuario de la sesion se pueden encontrar en req.user.<nombreDelDatoEnLaDB>

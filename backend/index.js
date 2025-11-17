@@ -3,6 +3,7 @@ import http from 'http';
 import { Server } from 'socket.io';
 import initializeSocket from'./sockets/manager.socket';
 import pruebaRoutes from './routes/prueba';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const PORT = 3000;
@@ -21,6 +22,7 @@ initializeSocket(io);
 
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/', mainRouter);
 
