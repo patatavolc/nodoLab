@@ -72,7 +72,7 @@ export const registerUser = async (req, res) => {
     }
 };
 
-function generateFingerprint(req) {
+export function generateFingerprint(req) {
     const ip = req.socket.remoteAddress;
     const agent = req.headers["user-agent"] || "unknow";
     return crypto
