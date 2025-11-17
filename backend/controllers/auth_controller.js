@@ -7,6 +7,7 @@ import {
     logByName,
 } from "../services/auth_service.js";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
 const aviableCredentials = async (dni, username, email, telefono, nombreCompleto) => {
     //Comprobacion de longitud de datos
