@@ -1,5 +1,12 @@
 import express from 'express'; 
 const router = express.Router();
+import { registerUser, generateLoginToken } from "../controllers/auth_controller.js";
+
+////PROBAR LOGIN 
+router.post("/register", registerUser);
+
+router.post("/login", generateLoginToken);
+/////
 
 router.get('/', (req, res) => {
     res.status(200).json({
