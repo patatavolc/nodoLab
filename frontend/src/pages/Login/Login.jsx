@@ -28,10 +28,9 @@ export default function Login() {
         throw new Error(data.message || "Error al iniciar sesión");
       }
 
-      // Guardar el token en localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      //Guardar el token en localstorage no es necesario ya que el controlador de auth lo guarda en una cookie llamada nodolab_auth_token --Carlos
 
+      
       // Redirigir al dashboard o página principal
       navigate("/dashboard");
     } catch (err) {
