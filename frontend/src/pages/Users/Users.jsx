@@ -100,7 +100,7 @@ const Users = () => {
                 // Limpiar selección si el usuario borrado estaba seleccionado
                 setSelectedUserIds((prev) => prev.filter((userId) => userId !== id));
             } catch (error) {
-                alert("Error deleting user");
+                alert("Error deleting user", error);
             }
         }
     };
