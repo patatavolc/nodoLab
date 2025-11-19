@@ -39,35 +39,29 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UserHeader from "../components/users/UserHeader";
-import UserFilters from "../components/users/UserFilters";
-import UserTable from "../components/users/UserTable";
+import UserHeader from "../../components/Users/UserHeader.jsx";
+import UserFilters from "../../components/Users/UserFilters.jsx";
+import UserTable from "../../components/Users/UserTable.jsx";
 
-// Endpoint del backend (a cambiar)
-const API_URL = "http://localhost:3000/api/users";
+const API_URL = "http://localhost:3000/api/usuarios";
 
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Estados para filtros
+    // Filtros (Eliminado Status porque no existe en la BD)
     const [searchTerm, setSearchTerm] = useState("");
     const [roleFilter, setRoleFilter] = useState("All");
-    const [statusFilter, setStatusFilter] = useState("All");
 
-    // Estado para selección múltiple (Checkboxes)
     const [selectedUserIds, setSelectedUserIds] = useState([]);
 
-    // Función para cargar usuarios (con filtros aplicados en el backend o frontend)
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            // Enviaremos los filtros como query params al backend
             const params = {
                 search: searchTerm,
-                role: roleFilter !== "All" ? roleFilter : undefined,
-                status: statusFilter !== "All" ? statusFilter : undefined,
+                rol: roleFilter !== "All" ? roleFilter : undefined, // Mapeo al campo 'rol' de la BD
             };
 
             const response = await axios.get(API_URL, { params });
@@ -81,42 +75,38 @@ const Users = () => {
         }
     };
 
-    // Re-cargar cuando cambien los filtros
-    // Debounce recomendado para búsqueda en producción, aquí simplificado
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
             fetchUsers();
-        }, 300); // Pequeño retraso para no saturar la API mientras escribes
-
+        }, 300);
         return () => clearTimeout(delayDebounce);
-    }, [searchTerm, roleFilter, statusFilter]);
+    }, [searchTerm, roleFilter]);
 
-    // Manejadores de acciones
-    const handleDeleteUser = async (id) => {
-        if (window.confirm("Are you sure you want to delete this user?")) {
+    const handleDeleteUser = async (dni) => {
+        if (window.confirm(`¿Estás seguro de eliminar al usuario con DNI ${dni}?`)) {
             try {
-                await axios.delete(`${API_URL}/${id}`);
-                fetchUsers(); // Recargar lista
-                // Limpiar selección si el usuario borrado estaba seleccionado
-                setSelectedUserIds((prev) => prev.filter((userId) => userId !== id));
+                // Usamos id_usuario_dni para borrar
+                await axios.delete(`${API_URL}/${dni}`);
+                fetchUsers();
+                setSelectedUserIds((prev) => prev.filter((id) => id !== dni));
             } catch (error) {
-                alert("Error deleting user", error);
+                alert("Error eliminando usuario. Puede tener reservas asociadas.");
             }
         }
     };
 
-    // Manejo de checkboxes
-    const handleSelectUser = (id) => {
-        if (selectedUserIds.includes(id)) {
-            setSelectedUserIds(selectedUserIds.filter((userId) => userId !== id));
+    const handleSelectUser = (dni) => {
+        if (selectedUserIds.includes(dni)) {
+            setSelectedUserIds(selectedUserIds.filter((id) => id !== dni));
         } else {
-            setSelectedUserIds([...selectedUserIds, id]);
+            setSelectedUserIds([...selectedUserIds, dni]);
         }
     };
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {
-            const allIds = users.map((u) => u.id);
+            // Mapeamos usando id_usuario_dni
+            const allIds = users.map((u) => u.id_usuario_dni);
             setSelectedUserIds(allIds);
         } else {
             setSelectedUserIds([]);
@@ -124,7 +114,7 @@ const Users = () => {
     };
 
     if (loading && users.length === 0)
-        return <div className="p-8 text-white">Loading users...</div>;
+        return <div className="p-8 text-white">Cargando usuarios...</div>;
     if (error) return <div className="p-8 text-red-400">{error}</div>;
 
     return (
@@ -132,13 +122,12 @@ const Users = () => {
             <UserHeader />
 
             <div className="mt-6">
+                {/* UserFilters modificado para quitar Status */}
                 <UserFilters
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
                     roleFilter={roleFilter}
                     setRoleFilter={setRoleFilter}
-                    statusFilter={statusFilter}
-                    setStatusFilter={setStatusFilter}
                 />
             </div>
 
