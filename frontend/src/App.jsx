@@ -2,57 +2,71 @@ import "./App.css";
 import Login from "./pages/Login/Login.jsx";
 import Layout from "./pages/Layout.jsx";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        {/* Ruta pública */}
-        <Route path="/login" element={<Login />} />
+    const [cookieData, setCookieData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-        {/* Rutas protegidas */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <div>Dashboard (crear componente)</div>
-            </PrivateRoute>
-          }
-        />
+    useEffect(() => {
+        const checkCookie = async () => {
+            try {
+                const response = await fetch("http://localhost:3000/api/getCookie", {
+                    method: "GET",
+                    credentials: "include",
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setCookieData(data);
+                }
+            } catch (err) {
+                console.error("Error comprobando cookie:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        checkCookie();
+    }, []);
 
-        {/* Añade más rutas protegidas aquí */}
-        {/* <Route 
-          path="/otra-pagina" 
-          element={
-            <PrivateRoute>
-              <OtraPagina />
-            </PrivateRoute>
-          } 
-        /> */}
+    if (loading) return <div>Cargando...</div>;
 
-        {/* Ruta por defecto: redirige a login si no hay token, sino a dashboard */}
-        <Route
-          path="/"
-          element={
-            localStorage.getItem("token") ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
+    return (
+        <Router>
+            <Routes>
+                {/* Ruta pública */}
+                <Route path="/login" element={<Login />} />
 
-        {/* Ruta 404 */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
-  );
+                {/* Rutas protegidas */}
+                <Route
+                    path="/dashboard"
+                    element={
+                        <PrivateRoute cookieData={cookieData}>
+                            <div>Dashboard (crear componente)</div>
+                        </PrivateRoute>
+                    }
+                />
+
+                {/* Ruta por defecto */}
+                <Route
+                    path="/"
+                    element={
+                        cookieData ? (
+                            <Navigate to="/dashboard" replace />
+                        ) : (
+                            <Navigate to="/login" replace />
+                        )
+                    }
+                />
+
+                {/* Ruta 404 */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
 
-// Componente para proteger rutas privadas
-function PrivateRoute({ children }) {
-  const token = localStorage.getItem("token");
-  return token ? children : <Navigate to="/login" replace />;
+function PrivateRoute({ children, cookieData }) {
+    return cookieData ? children : <Navigate to="/login" replace />;
 }

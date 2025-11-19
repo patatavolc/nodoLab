@@ -114,8 +114,8 @@ export const generateLoginToken = async (req, res) => {
 
     res.cookie("nodolab_auth_token", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production" ? true : false,
+        sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
         maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 

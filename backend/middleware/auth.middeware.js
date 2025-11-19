@@ -1,4 +1,4 @@
-import { generateFingerprint } from "../controllers/auth_controller";
+import { generateFingerprint } from "../controllers/auth_controller.js";
 
 export function authMiddleware(req, res, next) {
     const token = req.cookies.nodolab_auth_token;
@@ -16,8 +16,8 @@ export function authMiddleware(req, res, next) {
         if (actualFingerPrint !== decoded_token.fingerPrint) {
             res.clearCookie("myapp_auth_token", {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: "strict",
+                secure: process.env.NODE_ENV === "production" ? true : false,
+                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
             });
             return res.json({ valid: false, reason: "Enviroment change" });
             //redirect a la pagina de login en el frontend
