@@ -91,16 +91,16 @@ function passwordToHash(password, salt) {
 }
 
 export const generateLoginToken = async (req, res) => {
-    const logData = req.logData;
-    const password = req.password;
+    const email = req.body.email;
+    const password = req.body.password;
     let user;
 
-    if (!logData || !password) return null;
+    if (!email || !password) return null;
 
-    if (logData.includes("@")) {
-        user = await logByMail(logData);
+    if (email.includes("@")) {
+        user = await logByMail(email);
     } else {
-        user = await logByName(logData);
+        user = await logByName(email);
     }
 
     if (!user || user == null) return null;

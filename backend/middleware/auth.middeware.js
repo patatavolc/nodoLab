@@ -16,7 +16,7 @@ export function authMiddleware(req, res, next) {
         if (actualFingerPrint !== decoded_token.fingerPrint) {
             res.clearCookie("myapp_auth_token", {
                 httpOnly: true,
-                secure: true,
+                secure: process.env.NODE_ENV === 'production',
                 sameSite: "strict",
             });
             return res.json({ valid: false, reason: "Enviroment change" });
