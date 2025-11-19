@@ -1,9 +1,12 @@
+
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import initializeSocket from'./sockets/manager.socket.js';
 import mainRouter from './routes/mainRouter.js';
-import pruebaRoutes from './routes/prueba.js';
+import cookieParser from "cookie-parser";
+//import router from "./routes/mainRouter.js";
+
 
 const app = express();
 const PORT = 3000;
@@ -14,19 +17,19 @@ const io = new Server(server, {
     //Configuracion del CORS si el fronted corre en puerto diferente
     cors: {
         origin: "*",
-        methods: ["GET", "POST"]
-    }
+        methods: ["GET", "POST"],
+    },
 });
 
 initializeSocket(io);
 
-
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api', mainRouter);
 
-app.get('/', (req, res) => {
-    res.send('🚀 Servidor Express funcionando. Prueba la ruta /api/prueba');
+app.get("/", (req, res) => {
+    res.send("🚀 Servidor Express funcionando. Prueba la ruta /api/prueba");
 });
 
 server.listen(PORT, () => {

@@ -31,3 +31,25 @@ export const registerValidatedUser = async (dni, nombre, username, telefono, ema
     );
     return result.rows[0];
 }
+
+export const logByMail = async (mail) => {
+    const result = await pool.query(
+        `SELECT * FROM usuarios WHERE email = $1`,
+        [mail]
+    );
+    const user = result.rows[0];
+    if(!user) return null;
+
+    return user;
+}
+
+export const logByName = async (name) => {
+    const result = await pool.query(
+        `SELECT * FROM usuarios WHERE username = $1`,
+        [name]
+    );
+    const user = result.rows[0];
+    if(!user) return null;
+
+    return user;
+}
