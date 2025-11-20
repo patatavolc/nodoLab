@@ -112,12 +112,10 @@ export const generateLoginToken = async (req, res) => {
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
 
-    res.cookie("nodolab_auth_token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production" ? true : false,
-        sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-    });
+    return res.json({ token });
+};
 
-    return res.json({ message: "Login completado" });
+export const getUserFromAuthHeader = async (req, res) => {
+    const user = req.user;
+    return res.json({user});
 };

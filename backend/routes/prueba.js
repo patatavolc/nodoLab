@@ -1,12 +1,17 @@
 import express from "express";
 const router = express.Router();
-import { registerUser, generateLoginToken } from "../controllers/auth_controller.js";
-import { getUserFromCookie } from "../controllers/getCookie.js";
+import {
+    registerUser,
+    generateLoginToken,
+    getUserFromAuthHeader,
+} from "../controllers/auth_controller.js";
 import { authMiddleware } from "../middleware/auth.middeware.js";
 ////PROBAR LOGIN
 router.post("/auth/register", registerUser);
 
 router.post("/auth/login", generateLoginToken);
+
+router.get("/auth/userdata", authMiddleware, getUserFromAuthHeader);
 /////
 
 router.get("/", (req, res) => {
@@ -15,8 +20,6 @@ router.get("/", (req, res) => {
         archivo: "Respondiendo desde prueba.js",
     });
 });
-
-router.get("/getCookie", authMiddleware, getUserFromCookie);
 
 router.get("/usuario/:id", (req, res) => {
     const userId = req.params.id;
