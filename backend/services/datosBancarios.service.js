@@ -1,4 +1,4 @@
-import pool from '../../database/db.js';
+import pool from '../database/db.js';
 
 //Crear nuevo dato bancario
 export const newDatoBancario = async (data) => {

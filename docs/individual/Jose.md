@@ -68,3 +68,24 @@ Estas funcionalidades las he implementado primeramente en la base de datos de po
 
 - Los porcedimientos los he almacenado en una carpeta llamada procedures para una mejor organización del proyecto.
 - En el archivo database/procedures/02-obtener-hash-salt.sql, he usado FUNCTION en lugar de un PROCEDURE, pues en PostgreSQL no se permite hacer returns en los PROCEDURES.
+
+## FECHA: [20/11/2025]
+
+### AUTOR: [Jose]
+
+### ARCHIVOS MODIFICADOS
+
+- backend/services/auth_service.js (modificado)
+- backend/services/datosBancarios.service.js (modificado)
+- backend/services/pagos.service.js (modificado)
+- backend/services/recursos.service.js (modificado)
+- backend/services/usuarios.service.js (modificado)
+
+
+### DESCRIPCION
+
+- He movido la carpeta de database, la cual se encontraba en la carpeta raíz, dentro del backend. Además he cambiado las rutas de los archivos dentro de services para que se importe correctamente.
+
+### OBSERVACIONES
+
+- Un problema que tuve fue que cuando me he puesto a crear una nueva rama, se me ha olvidado hacer un pull, asi que me he puesto a cambiar la estructura de carpetas y me he dado cuenta que tenia muy pocos procedimientos, entonces me he dado cuenta de que no tenía actualizado el código, por lo que he hecho un git pull origin main desde mi nueva rama, y tras eso me he puesto a meter la carpeta database en el backend.

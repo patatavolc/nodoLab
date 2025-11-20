@@ -1,4 +1,4 @@
-import pool from '../../database/db.js';
+import pool from '../database/db.js';
 
 //Crear un recurso
 export const newRecurso = async (data) => {
