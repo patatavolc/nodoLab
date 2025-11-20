@@ -13,18 +13,20 @@ const PORT = 3000;
 const server = http.createServer(app);
 
 //CORS HTTP/S
-app.use(cors({
-  origin: "http://localhost:4173",
-  credentials: true,
-}));
+app.use(
+    cors({
+        origin: "http://localhost:4173",
+        credentials: true,
+    })
+);
 
 // CORS SOCKET IO
 const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:4173",
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
+    cors: {
+        origin: "http://localhost:5173",
+        methods: ["GET", "POST"],
+        credentials: true,
+    },
 });
 
 initializeSocket(io);
