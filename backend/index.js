@@ -3,8 +3,7 @@ import http from "http";
 import { Server } from "socket.io";
 import initializeSocket from "./sockets/manager.socket.js";
 import cookieParser from "cookie-parser";
-//import router from "./routes/mainRouter.js";
-import routerPrueba from "./routes/prueba.js";
+import mainRouter from "./routes/mainRouter.js";
 import cors from "cors";
 
 const app = express();
@@ -32,8 +31,7 @@ initializeSocket(io);
 app.use(express.json());
 app.use(cookieParser());
 
-//app.use('/api', mainRouter);
-app.use("/api", routerPrueba);
+app.use('/api', mainRouter);
 
 app.get("/", (req, res) => {
     res.send("🚀 Servidor Express funcionando. Prueba la ruta /api/prueba");
