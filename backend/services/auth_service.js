@@ -1,4 +1,4 @@
-import pool from '../db/db.js';
+import pool from '../database/db.js';
 
 export const takenMail = async (email) => {
     const result = await pool.query(

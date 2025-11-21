@@ -68,3 +68,42 @@ Estas funcionalidades las he implementado primeramente en la base de datos de po
 
 - Los porcedimientos los he almacenado en una carpeta llamada procedures para una mejor organización del proyecto.
 - En el archivo database/procedures/02-obtener-hash-salt.sql, he usado FUNCTION en lugar de un PROCEDURE, pues en PostgreSQL no se permite hacer returns en los PROCEDURES.
+
+## FECHA: [14/11/2025]
+
+### AUTOR: [Jose]
+
+### ARCHIVOS MODIFICADOS
+
+- docs/individual/Jose.md (modificado)
+- database/procedures/11-crear_reserva_sin_solapamiento (creado)
+- database/procedures/12-cancelar_reserva (creado)
+
+### DESCRIPCION
+
+- Estuve observando los procedimientos que hemos estado haciendo y me dí cuenta que en las reservas podría haber conflicto al crear una reserva por culpa de que dos o más reservas se solapasen, así que decidí crear un procedimiento para impedir esto. Tras crear este procedimiento, observé que habia un procedimiento para crear la reserva, pero no existía uno para cancelarla, así que decidí hacer estos dos procedimientos, mejorando la base de datos.
+
+### OBSERVACIONES
+
+- Cuando terminé los dos procedimientos, estuve hablando con Nicolás Blasco sobre que podía seguir haciendo, así que nos decantamos con que me ayudase a pensar que procedimientos podíamos implementar y posteriormente ponernos a crearlos. Así que eso hicimos, nos dividimos el trabajo para poder finalizar los procedimientos cuanto antes y seguir con otras partes del proyecto.
+
+## FECHA: [20/11/2025]
+
+### AUTOR: [Jose]
+
+### ARCHIVOS MODIFICADOS
+
+- backend/services/auth_service.js (modificado)
+- backend/services/datosBancarios.service.js (modificado)
+- backend/services/pagos.service.js (modificado)
+- backend/services/recursos.service.js (modificado)
+- backend/services/usuarios.service.js (modificado)
+
+
+### DESCRIPCION
+
+- He movido la carpeta de database, la cual se encontraba en la carpeta raíz, dentro del backend. Además he cambiado las rutas de los archivos dentro de services para que se importe correctamente.
+
+### OBSERVACIONES
+
+- Un problema que tuve fue que cuando me he puesto a crear una nueva rama, se me ha olvidado hacer un pull, asi que me he puesto a cambiar la estructura de carpetas y me he dado cuenta que tenia muy pocos procedimientos, entonces me he dado cuenta de que no tenía actualizado el código, por lo que he hecho un git pull origin main desde mi nueva rama, y tras eso me he puesto a meter la carpeta database en el backend.
