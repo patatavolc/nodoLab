@@ -69,6 +69,24 @@ Estas funcionalidades las he implementado primeramente en la base de datos de po
 - Los porcedimientos los he almacenado en una carpeta llamada procedures para una mejor organización del proyecto.
 - En el archivo database/procedures/02-obtener-hash-salt.sql, he usado FUNCTION en lugar de un PROCEDURE, pues en PostgreSQL no se permite hacer returns en los PROCEDURES.
 
+## FECHA: [14/11/2025]
+
+### AUTOR: [Jose]
+
+### ARCHIVOS MODIFICADOS
+
+- docs/individual/Jose.md (modificado)
+- database/procedures/11-crear_reserva_sin_solapamiento (creado)
+- database/procedures/12-cancelar_reserva (creado)
+
+### DESCRIPCION
+
+- Estuve observando los procedimientos que hemos estado haciendo y me dí cuenta que en las reservas podría haber conflicto al crear una reserva por culpa de que dos o más reservas se solapasen, así que decidí crear un procedimiento para impedir esto. Tras crear este procedimiento, observé que habia un procedimiento para crear la reserva, pero no existía uno para cancelarla, así que decidí hacer estos dos procedimientos, mejorando la base de datos.
+
+### OBSERVACIONES
+
+- Cuando terminé los dos procedimientos, estuve hablando con Nicolás Blasco sobre que podía seguir haciendo, así que nos decantamos con que me ayudase a pensar que procedimientos podíamos implementar y posteriormente ponernos a crearlos. Así que eso hicimos, nos dividimos el trabajo para poder finalizar los procedimientos cuanto antes y seguir con otras partes del proyecto.
+
 ## FECHA: [20/11/2025]
 
 ### AUTOR: [Jose]
