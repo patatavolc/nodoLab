@@ -68,3 +68,12 @@ export const updateReserva = async (id_reserva, data) => {
 
     return result.rows[0];
 };
+
+// Actualizar el estado de una reserva
+export const updateEstadoReserva = async (id_reserva, nuevoEstado) => {
+    const result = await pool.query(
+        'UPDATE reservas SET estado = $1 WHERE id_reserva = $2 RETURNING *',
+        [nuevoEstado, id_reserva]
+    );
+    return result.rows[0];
+};
