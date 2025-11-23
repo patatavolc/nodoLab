@@ -11,8 +11,17 @@ export const newReserva = async (data) => {
     return result.rows[0];
 }
 
-// Obtener todas las reservas 
+// Obtener todas las reservas
 export const getReservas = async () => {
     const result = await pool.query('SELECT * FROM reservas ORDER BY fecha_inicio DESC');
     return result.rows;
+};
+
+// Obtener reserva por ID
+export const getReservaById = async (id_reserva) => {
+    const result = await pool.query(
+        'SELECT * FROM reservas WHERE id_reserva = $1',
+        [id_reserva]
+    );
+    return result.rows[0];
 };
