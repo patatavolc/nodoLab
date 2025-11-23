@@ -43,3 +43,28 @@ export const getReservasByRecurso = async (id_recurso) => {
     );
     return result.rows;
 };
+
+// Actualizar una reserva
+export const updateReserva = async (id_reserva, data) => {
+    const { id_recurso, fecha_inicio, fecha_fin, estado } = data;
+
+    const query = `
+        UPDATE reservas
+        SET 
+            id_recurso = COALESCE($1, id_recurso),
+            fecha_inicio = COALESCE($2, fecha_inicio),
+            fecha_fin = COALESCE($3, fecha_fin),
+            estado = COALESCE($4, estado)
+        WHERE id_reserva = $5
+        RETURNING *`;
+
+    const result = await pool.query(query, [
+        id_recurso,
+        fecha_inicio,
+        fecha_fin,
+        estado,
+        id_reserva
+    ]);
+
+    return result.rows[0];
+};
