@@ -86,3 +86,9 @@ export const cancelarReserva = async (id_reserva) => {
     );
     return result.rows[0];
 };
+
+// Eliminar una reserva
+export const eliminarReserva = async (id_reserva) => {
+    await pool.query('DELETE FROM reservas WHERE id_reserva = $1', [id_reserva]);
+    return { message: 'Reserva eliminada correctamente' };
+};
