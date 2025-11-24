@@ -115,3 +115,11 @@ export const buscarUsuarios = async (texto) => {
     const result = await pool.query(query, [busqueda]);
     return result.rows;
 }
+
+// Eliminar usuario
+export const deleteUsuario = async (id_usuario_dni) => {
+    await pool.query('DELETE FROM usuarios WHERE id_usuario_dni = $1', [
+        id_usuario_dni,
+    ]);
+    return { mensaje: 'Usuario eliminado correctamente' };
+}
