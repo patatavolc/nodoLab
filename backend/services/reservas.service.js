@@ -25,3 +25,21 @@ export const getReservaById = async (id_reserva) => {
     );
     return result.rows[0];
 };
+
+// Obtener reservas por ID de usuario
+export const getReservasByUsuario = async (id_usuario) => {
+    const result = await pool.query(
+        'SELECT * FROM reservas WHERE id_usuario = $1 ORDER BY fecha_inicio DESC',
+        [id_usuario]
+    );
+    return result.rows;
+};
+
+// Obtener reservas por ID de recurso
+export const getReservasByRecurso = async (id_recurso) => {
+    const result = await pool.query(
+        'SELECT * FROM reservas WHERE id_recurso = $1 ORDER BY fecha_inicio DESC',
+        [id_recurso]
+    );
+    return result.rows;
+};
