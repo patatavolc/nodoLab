@@ -25,3 +25,12 @@ export const getRecursoById = async (id_recurso) => {
     );
     return result.rows[0];
 };
+
+// Obtener recursos por tipo
+export const getRecursosByTipo = async (tipo) => {
+    const result = await pool.query(
+        'SELECT * FROM recursos WHERE tipo = $1 ORDER BY nombre ASC',
+        [tipo]
+    );
+    return result.rows;
+};
