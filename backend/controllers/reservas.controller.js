@@ -43,7 +43,7 @@ export const getReservaId = (req, res) => {
 }
 
 // Obtener reserva por dni
-export const getReservaDni = (req,res) =>{
+export const getReservaByDni = (req,res) =>{
     const dni = req.body.dni;
 
     if(dni) {
@@ -60,7 +60,7 @@ export const getReservaDni = (req,res) =>{
 }
 
 //Obtener reserva por id
-export const getReservaIdRecurso = (req, res) => {
+export const getReservaByRecurso = (req, res) => {
     const idRecurso = req.body.idRecurso;
 
     if(idRecurso){
@@ -77,7 +77,7 @@ export const getReservaIdRecurso = (req, res) => {
 }
 
 //Obtener reservas por fecha
-export const getRecursoFecha = (req, res) => {
+export const getRecursoByFecha = (req, res) => {
     const fechaReserva = req.body.fecha_inicio;
 
     if(fechaReserva){
@@ -91,4 +91,36 @@ export const getRecursoFecha = (req, res) => {
     }else {
         res.status(400).send({error: 'Fecha erronea'})
     }
+}
+
+// Crear reserva
+export const postReserva = (req,res) => {
+    const data = req.body;
+
+    if(data.id_recurso){
+
+        newReservaService(data)
+            .then((newReserva) => {
+                res.status(201).send(newReserva);
+            })
+            .catch((error) =>{
+                res.status(400).send({error: error.message})
+            })
+    } else {
+        res.status(400).send({error: 'Faltan datos obligatorios'});
+    }
+}
+
+//Actualizar reserva
+export const updateReserva = (req, res) => {
+    const data = req.body;
+    const id_reserva = req.params.id_reserva
+
+    updateReservaService(id_reserva, data)
+    .then((updatedReserva) =>{
+        res.status(200).send(updatedReserva);
+    })
+    .catch((error) => {
+        res.status(400).send({error: error.message});
+    });
 }
