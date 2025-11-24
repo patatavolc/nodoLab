@@ -72,3 +72,12 @@ export const updatePassword = async (id_usuario_dni, password_hash, salt) => {
 
     return result.rows[0];
 }
+
+// Actualizar rol de usuario
+export const updateRol = async (id_usuario_dni, nuevoRol) => {
+    const result = await pool.query(
+        'UPDATE usuarios SET rol = $1 WHERE id_usuario_dni = $2 RETURNING *',
+        [nuevoRol, id_usuario_dni]
+    );
+    return result.rows[0];
+}
