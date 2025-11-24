@@ -10,3 +10,9 @@ export const newRecurso = async (data) => {
     );
     return result.rows[0];
 }
+
+// Obtener todos los recursos
+export const getRecursos = async () => {
+    const result = await pool.query('SELECT * FROM recursos ORDER BY nombre ASC');
+    return result.rows;
+};
