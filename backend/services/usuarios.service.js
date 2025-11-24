@@ -29,3 +29,28 @@ export const getUsuarioByUsername = async (username) => {
     );
     return result.rows[0];
 }
+
+// Actualizar usuario
+export const updateUsuario = async (id_usuario_dni, data) => {
+    const { nombre_completo, rol, telefono, email } = data;
+
+    const query = `
+        UPDATE usuarios
+        SET 
+            nombre_completo = COALESCE($1, nombre_completo),
+            rol = COALESCE($2, rol),
+            telefono = COALESCE($3, telefono),
+            email = COALESCE($4, email)
+        WHERE id_usuario_dni = $5
+        RETURNING *`;
+
+    const result = await pool.query(query, [
+        nombre_completo,
+        rol,
+        telefono,
+        email,
+        id_usuario_dni
+    ]);
+
+    return result.rows[0];
+}
