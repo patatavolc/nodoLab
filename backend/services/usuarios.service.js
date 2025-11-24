@@ -90,3 +90,12 @@ export const emailExiste = async (email) => {
     );
     return result.rowCount > 0;
 }
+
+// Verificar si el username ya existe
+export const usernameExiste = async (username) => {
+    const result = await pool.query(
+        'SELECT 1 FROM usuarios WHERE username = $1',
+        [username]
+    );
+    return result.rowCount > 0;
+}
