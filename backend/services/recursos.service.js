@@ -16,3 +16,12 @@ export const getRecursos = async () => {
     const result = await pool.query('SELECT * FROM recursos ORDER BY nombre ASC');
     return result.rows;
 };
+
+// Obtener recurso por ID
+export const getRecursoById = async (id_recurso) => {
+    const result = await pool.query(
+        'SELECT * FROM recursos WHERE id_recurso = $1',
+        [id_recurso]
+    );
+    return result.rows[0];
+};
