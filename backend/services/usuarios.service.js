@@ -99,3 +99,19 @@ export const usernameExiste = async (username) => {
     );
     return result.rowCount > 0;
 }
+
+// Buscar usuarios por nombre, email o username
+export const buscarUsuarios = async (texto) => {
+    const busqueda = `%${texto}%`;
+
+    const query = `
+        SELECT * FROM usuarios 
+        WHERE 
+            nombre_completo ILIKE $1 OR
+            email ILIKE $1 OR
+            username ILIKE $1
+        ORDER BY nombre_completo ASC`;
+
+    const result = await pool.query(query, [busqueda]);
+    return result.rows;
+}
