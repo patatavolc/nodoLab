@@ -11,3 +11,12 @@ export const newUsuario = async (data) => {
     );
     return result.rows[0];
 }
+
+// Obtener usuario por DNI
+export const getUsuarioByDNI = async (id_usuario_dni) => {
+    const result = await pool.query(
+        'SELECT * FROM usuarios WHERE id_usuario_dni = $1',
+        [id_usuario_dni]
+    );
+    return result.rows[0];
+}
