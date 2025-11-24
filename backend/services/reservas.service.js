@@ -77,3 +77,12 @@ export const updateEstadoReserva = async (id_reserva, nuevoEstado) => {
     );
     return result.rows[0];
 };
+
+// Cancelar una reserva
+export const cancelarReserva = async (id_reserva) => {
+    const result = await pool.query(
+        "UPDATE reservas SET estado = 'cancelada' WHERE id_reserva = $1 RETURNING *",
+        [id_reserva]
+    );
+    return result.rows[0];
+};
