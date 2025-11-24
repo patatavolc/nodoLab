@@ -11,3 +11,11 @@ export const newUsuario = async (data) => {
     );
     return result.rows[0];
 }
+
+//Obtener todos los usuarios
+export const getUsuarios = async () => {
+    const result = await pool.query(
+        'SELECT * FROM usuarios ORDER BY nombre_completo ASC'
+    );
+    return result.rows;
+}
