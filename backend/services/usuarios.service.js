@@ -81,3 +81,12 @@ export const updateRol = async (id_usuario_dni, nuevoRol) => {
     );
     return result.rows[0];
 }
+
+// Verificar si el email ya existe
+export const emailExiste = async (email) => {
+    const result = await pool.query(
+        'SELECT 1 FROM usuarios WHERE email = $1',
+        [email]
+    );
+    return result.rowCount > 0;
+}
