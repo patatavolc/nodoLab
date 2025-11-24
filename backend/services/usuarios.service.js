@@ -54,3 +54,21 @@ export const updateUsuario = async (id_usuario_dni, data) => {
 
     return result.rows[0];
 }
+
+// Actualizar contraseña de usuario
+export const updatePassword = async (id_usuario_dni, password_hash, salt) => {
+    const query = `
+        UPDATE usuarios
+        SET password_hash = $1,
+            salt = $2
+        WHERE id_usuario_dni = $3
+        RETURNING *`;
+
+    const result = await pool.query(query, [
+        password_hash,
+        salt,
+        id_usuario_dni
+    ]);
+
+    return result.rows[0];
+}
