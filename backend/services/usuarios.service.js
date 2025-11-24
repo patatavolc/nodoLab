@@ -20,3 +20,12 @@ export const getUsuarioByDNI = async (id_usuario_dni) => {
     );
     return result.rows[0];
 }
+
+// Obtener usuario por username
+export const getUsuarioByUsername = async (username) => {
+    const result = await pool.query(
+        'SELECT * FROM usuarios WHERE username = $1',
+        [username]
+    );
+    return result.rows[0];
+}
