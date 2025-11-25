@@ -116,11 +116,28 @@ export const getRecursosMasReservados = async () => {
             rec.nombre,
             rec.tipo,
             COUNT(r.id_reserva) as total_reservas
-            FROM recursos rec
-            LEFT JOIN reservas r ON rec.id_recurso = r.id_recurso
-            GROUP BY rec.id_recurso, rec.nombre, rec.tipo
-            ORDER BY total_reservas DESC
-            LIMIT 5
+        FROM recursos rec
+        LEFT JOIN reservas r ON rec.id_recurso = r.id_recurso
+        GROUP BY rec.id_recurso, rec.nombre, rec.tipo
+        ORDER BY total_reservas DESC
+        LIMIT 5
             `);
+    return result.rows;
+};
+
+// Obtener la tasa de ocupacion de recursos
+export const getTasaOcupacionRecursos = async () => {
+    const result = await pool.query(`
+        SELECT
+            rec.id_recurso,
+            rec.nombre,
+            rec.tipo,
+            COUNT(r.id_reserva) as reservas_totales
+            COUNT(CASE WHEN r.estado = 'confirmada' THEN 1 END) as reservas_confirmadas
+        FROM recursos rec
+        LEFT JOIN reservas r ON rec.id_recurso = r.id_recurso
+        GROUP BY rec.id_recurso, rec.nombre, rec.tipo
+        ORDER BY reservas_totales DESC
+        `);
     return result.rows;
 };
