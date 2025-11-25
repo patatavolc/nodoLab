@@ -97,3 +97,12 @@ export const existePagoParaReserva = async (id_reserva) => {
     );
     return resultado.rowCount > 0;
 };
+
+// Eliminar pago
+export const eliminarPago = async (id_pago) => {
+    const resultado = await pool.query(
+        `DELETE FROM pagos WHERE id_pago = $1 RETURNING *`,
+        [id_pago]
+    );
+    return resultado.rows[0];
+};
