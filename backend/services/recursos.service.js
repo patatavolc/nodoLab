@@ -106,3 +106,9 @@ export const buscarRecursos = async (texto) => {
     const result = await pool.query(query, [busqueda]);
     return result.rows;
 };
+
+// Eliminar un recurso
+export const deleteRecurso = async (id_recurso) => {
+    await pool.query('DELETE FROM recursos WHERE id_recurso = $1', [id_recurso]);
+    return { mensaje: 'Recurso eliminado correctamente' };
+};
