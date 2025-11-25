@@ -77,7 +77,7 @@ export const getReservaByRecurso = (req, res) => {
 }
 
 //Obtener reservas por fecha
-export const getRecursoByFecha = (req, res) => {
+export const getReservaByFecha = (req, res) => {
     const fechaReserva = req.body.fecha_inicio;
 
     if(fechaReserva){

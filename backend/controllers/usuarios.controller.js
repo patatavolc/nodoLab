@@ -15,3 +15,42 @@ export const createUsuario = (req, res) => {
             res.status(400).send({error: 'Faltan datos obligatorios'});
         }
 }
+
+//Obtener usuarios
+export const getUsuarios = (req, res) => {
+    getAllUsuarios()
+    .then((usuarios) => {
+        res.send(usuarios);
+    });
+}
+
+//Obtener usuario por dni
+export const getUsuarioByDni = (req, res) => {
+    const dni = req.body.dni;
+
+    if(dni){
+        getReservaIdService(dni)
+        .then((usuario) => {
+            res.status(200).send(usuario)
+        })
+        .catch((error) => {
+            res.status(400).send({error: error.message})
+        })
+    } else {
+        res.status(400).send({error:'Id incorrecto'});
+    }
+}
+
+//Actualizar usuario
+export const updateUsuario = (req, res) => {
+    const data = req.body;
+    const dniUsuario = req.params.dniUsuario
+
+    updateReservaService(dniUsuario, data)
+    .then((updatedUsuario) =>{
+        res.status(200).send(updatedUsuario);
+    })
+    .catch((error) => {
+        res.status(400).send({error: error.message});
+    });
+}
