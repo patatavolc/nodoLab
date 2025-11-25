@@ -24,6 +24,7 @@ export const getPagos = (req,res) => {
         .then((pagos) =>{
             res.send(pagos);
         });
+        
 }
 
 //Obtener pago por id
