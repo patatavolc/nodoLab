@@ -34,3 +34,12 @@ export const getRecursosByTipo = async (tipo) => {
     );
     return result.rows;
 };
+
+// Obtener recursos por Estado
+export const getRecursosByEstado = async (estado) => {
+    const result = await pool.query(
+        'SELECT * FROM recursos WHERE estado = $1 ORDER BY nombre ASC',
+        [estado]
+    );
+    return result.rows;
+};
