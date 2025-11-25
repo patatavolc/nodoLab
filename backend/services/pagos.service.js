@@ -18,3 +18,12 @@ export const obtenerPagos = async () => {
     );
     return resultado.rows;
 };
+
+// Obtener pago por ID
+export const obtenerPagoPorId = async (id_pago) => {
+    const resultado = await pool.query(
+        `SELECT * FROM pagos WHERE id_pago = $1`,
+        [id_pago]
+    );
+    return resultado.rows[0];
+};
