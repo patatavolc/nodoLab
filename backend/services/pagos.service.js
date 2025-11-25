@@ -37,6 +37,24 @@ export const obtenerPagosPorReserva = async (id_reserva) => {
     return resultado.rows;
 };
 
+// Obtener ingresos por mes (últimos 6 meses)
+export const getIngresosPorMes = async () => {
+    const result = await pool.query(
+        `
+        SELECT
+            TO_CHAR(fecha_pago, 'YYYY-MM') as mes,
+            SUM(importe) as total
+        FROM pagos
+        WHERE estado = $1
+        AND fecha_pago >= NOW() - INTERVAL '6 months'
+        GROUP BY TO_CHAR(fecha_pago, 'YYYY-MM')
+        ORDER BY mes DESC
+    `,
+        ["completado"]
+    );
+    return result.rows;
+};
+
 // Actualizar pago
 export const actualizarPago = async (id_pago, data) => {
     const { precio_total, metodo_pago, fecha_pago, devolucion } = data;
