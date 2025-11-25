@@ -82,3 +82,12 @@ export const updateCapacidad = async (id_recurso, capacidad) => {
     );
     return result.rows[0];
 };
+
+// Actualizar precio por hora de un recurso
+export const updatePrecioHora = async (id_recurso, precio_hora) => {
+    const result = await pool.query(
+        'UPDATE recursos SET precio_hora = $1 WHERE id_recurso = $2 RETURNING *',
+        [precio_hora, id_recurso]
+    );
+    return result.rows[0];
+};
