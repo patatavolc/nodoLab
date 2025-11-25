@@ -27,3 +27,12 @@ export const obtenerPagoPorId = async (id_pago) => {
     );
     return resultado.rows[0];
 };
+
+// Obtener pagos por ID de reserva
+export const obtenerPagosPorReserva = async (id_reserva) => {
+    const resultado = await pool.query(
+        `SELECT * FROM pagos WHERE id_reserva = $1 ORDER BY fecha_pago DESC`,
+        [id_reserva]
+    );
+    return resultado.rows;
+};
