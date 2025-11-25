@@ -36,3 +36,28 @@ export const obtenerPagosPorReserva = async (id_reserva) => {
     );
     return resultado.rows;
 };
+
+// Actualizar pago
+export const actualizarPago = async (id_pago, data) => {
+    const { precio_total, metodo_pago, fecha_pago, devolucion } = data;
+
+    const query = `
+        UPDATE pagos
+        SET
+            precio_total = COALESCE($1, precio_total),
+            metodo_pago  = COALESCE($2, metodo_pago),
+            fecha_pago   = COALESCE($3, fecha_pago),
+            devolucion   = COALESCE($4, devolucion)
+        WHERE id_pago = $5
+        RETURNING *`;
+    
+    const resultado = await pool.query(query, [
+        precio_total,
+        metodo_pago,
+        fecha_pago,
+        devolucion,
+        id_pago
+    ]);
+
+    return resultado.rows[0];
+};
