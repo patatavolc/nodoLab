@@ -107,3 +107,37 @@ Estas funcionalidades las he implementado primeramente en la base de datos de po
 ### OBSERVACIONES
 
 - Un problema que tuve fue que cuando me he puesto a crear una nueva rama, se me ha olvidado hacer un pull, asi que me he puesto a cambiar la estructura de carpetas y me he dado cuenta que tenia muy pocos procedimientos, entonces me he dado cuenta de que no tenía actualizado el código, por lo que he hecho un git pull origin main desde mi nueva rama, y tras eso me he puesto a meter la carpeta database en el backend.
+
+## FECHA: [23/11/2025]
+
+### AUTOR: [Jose]
+
+### ARCHIVOS MODIFICADOS
+
+- backend/services/reservas.service.js (modificado)
+- backend/services/usuarios.service.js (modificado)
+
+
+### DESCRIPCION
+
+- Empecé a crear todos los servicios del archivo reservas.service.js, tras terminarlos empecé con algunos del archivo usuarios.service.js. Gracias a estas implementaciones, ahora se pueden realizar diversas querys en estos archivos, como crear una reserva, actualizar un usuario, cancelar una reserva, etc.
+
+### OBSERVACIONES
+
+- Me di cuenta que muchos de los archivos tenian que tener mismas querys, esto me ahorró trabajo, pues como ya tenia hecho alguna query en reservas.service.js, la pude realizar de nuevo en usuarios.service.js, pero cambiando la informacion de las tablas.
+
+## FECHA: [24/11/2025]
+
+### AUTOR: [Jose]
+
+### ARCHIVOS MODIFICADOS
+
+- backend/services/usuarios.service.js (modificado)
+
+### DESCRIPCION
+
+- Comencé creando los servicios que me faltaban para completar el archivo usuarios.service.js. La estructura que llevé fue la misma que llevé con el archivo reservas.service.js, primero poner la query de crear un usuario, despues las que iban relacionadas con obtener información y verificar dicha información, y por último, actualizar un recurso, buscarlo por nombre, email o username, y eliminar un recurso.
+
+### OBSERVACIONES
+
+- Este dia traté de terminar con el archivo de usuarios, para el dia siguiente seguir con los archivos que faltan.
