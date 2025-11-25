@@ -43,3 +43,32 @@ export const getRecursosByEstado = async (estado) => {
     );
     return result.rows;
 };
+
+// Actualizar recurso
+export const updateRecurso = async (id_recurso, data) => {
+    const { nombre, tipo, descripcion, capacidad, estado, precio_hora } = data;
+
+    const query = `
+        UPDATE recursos
+        SET 
+            nombre = COALESCE($1, nombre),
+            tipo = COALESCE($2, tipo),
+            descripcion = COALESCE($3, descripcion),
+            capacidad = COALESCE($4, capacidad),
+            estado = COALESCE($5, estado),
+            precio_hora = COALESCE($6, precio_hora)
+        WHERE id_recurso = $7
+        RETURNING *`;
+
+    const result = await pool.query(query, [
+        nombre,
+        tipo,
+        descripcion,
+        capacidad,
+        estado,
+        precio_hora,
+        id_recurso
+    ]);
+
+    return result.rows[0];
+};
