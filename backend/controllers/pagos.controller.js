@@ -1,4 +1,4 @@
-import {newPago} from '../services/pagos.service.js';
+import {newPago, obtenerPagos, obtenerPagoPorId, actualizarPago, existePagoParaReserva} from '../services/pagos.service.js';
 
 //Crear nuevo pago
 export const createPago = (req, res) => {
@@ -20,7 +20,7 @@ export const createPago = (req, res) => {
 //Obtener todos pagos
 export const getPagos = (req,res) => {
 
-    getAllPagos()
+    obtenerPagos()
         .then((pagos) =>{
             res.send(pagos);
         });
@@ -32,7 +32,7 @@ export const getPagoById = (req, res) => {
 
     if(idPago){
 
-        getPagoByIdService()
+        obtenerPagoPorId()
             .then((pago) =>{
                 res.status(200).send(pago);
             })
@@ -49,7 +49,7 @@ export const getPagoByIdReserva = (req, res) => {
     const idReserva= req.params.idReserva;
 
     if(idReserva){
-        getPagoByIdReservaService()
+        existePagoParaReserva()
             .then((pago) =>{
                 res.status(200).send(pago);
             })
@@ -82,7 +82,7 @@ export const updatePago = (req, res) => {
     const data = req.body;
     const idPago = req.params.idPago;
 
-    updatePagoService(idPago, data)
+    actualizarPago(idPago, data)
         .then((updatedPago) =>{
             res.status(200).send(updatedPago);
         })
