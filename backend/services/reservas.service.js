@@ -108,3 +108,11 @@ export const getReservasRecientes = async () => {
     );
     return result.rows;
 };
+
+// Obtener estadisticas de reservas por estado
+export const getEstadisticasReservasPorEstado = async () => {
+    const result = await pool.query(
+        "SELECT estado COUNT(*) as cantidad FROM reservas GROUP BY estado"
+    );
+    return result.rows;
+};
