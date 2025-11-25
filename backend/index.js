@@ -5,6 +5,7 @@ import initializeSocket from "./sockets/manager.socket.js";
 import cookieParser from "cookie-parser";
 import mainRouter from "./routes/mainRouter.js";
 import cors from "cors";
+import logger from './middleware/logger.js';
 
 const app = express();
 const PORT = 3000;
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api', mainRouter);
+app.use(logger);
 
 app.get("/", (req, res) => {
     res.send("🚀 Servidor Express funcionando. Prueba la ruta /api/prueba");
