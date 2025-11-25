@@ -1,4 +1,4 @@
-import {newUsuario} from '../services/usuarios.service.js';
+import {newUsuario, getUsuarios, getUsuarioByDNI, updateUsuario} from '../services/usuarios.service.js';
 
 export const createUsuario = (req, res) => {
     const data = req.body;
@@ -18,7 +18,7 @@ export const createUsuario = (req, res) => {
 
 //Obtener usuarios
 export const getUsuarios = (req, res) => {
-    getAllUsuarios()
+    getUsuarios()
     .then((usuarios) => {
         res.send(usuarios);
     });
@@ -29,7 +29,7 @@ export const getUsuarioByDni = (req, res) => {
     const dni = req.body.dni;
 
     if(dni){
-        getReservaIdService(dni)
+        getUsuarioByDNI(dni)
         .then((usuario) => {
             res.status(200).send(usuario)
         })
