@@ -72,3 +72,13 @@ export const updateRecurso = async (id_recurso, data) => {
 
     return result.rows[0];
 };
+
+
+// Actualizar capacidad de un recurso
+export const updateCapacidad = async (id_recurso, capacidad) => {
+    const result = await pool.query(
+        'UPDATE recursos SET capacidad = $1 WHERE id_recurso = $2 RETURNING *',
+        [capacidad, id_recurso]
+    );
+    return result.rows[0];
+};
