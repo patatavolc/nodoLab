@@ -1,42 +1,36 @@
-import pool from '../database/db.js';
+import pool from "../database/db.js";
 
 //Crear nuevo usuario
 export const newUsuario = async (data) => {
-    const {id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt} = data;
+    const { id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt } =
+        data;
 
     const result = await pool.query(
-        'INSERT INTO usuarios (id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+        "INSERT INTO usuarios (id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
         [id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt]
-
     );
     return result.rows[0];
-}
+};
 
 // Obtener todos los usuarios
 export const getUsuarios = async () => {
-    const result = await pool.query(
-        'SELECT * FROM usuarios ORDER BY nombre_completo ASC'
-    );
+    const result = await pool.query("SELECT * FROM usuarios ORDER BY nombre_completo ASC");
     return result.rows;
-}
+};
 
 // Obtener usuario por DNI
 export const getUsuarioByDNI = async (id_usuario_dni) => {
-    const result = await pool.query(
-        'SELECT * FROM usuarios WHERE id_usuario_dni = $1',
-        [id_usuario_dni]
-    );
+    const result = await pool.query("SELECT * FROM usuarios WHERE id_usuario_dni = $1", [
+        id_usuario_dni,
+    ]);
     return result.rows[0];
-}
+};
 
 // Obtener usuario por username
 export const getUsuarioByUsername = async (username) => {
-    const result = await pool.query(
-        'SELECT * FROM usuarios WHERE username = $1',
-        [username]
-    );
+    const result = await pool.query("SELECT * FROM usuarios WHERE username = $1", [username]);
     return result.rows[0];
-}
+};
 
 // Actualizar usuario
 export const updateUsuario = async (id_usuario_dni, data) => {
@@ -52,16 +46,10 @@ export const updateUsuario = async (id_usuario_dni, data) => {
         WHERE id_usuario_dni = $5
         RETURNING *`;
 
-    const result = await pool.query(query, [
-        nombre_completo,
-        rol,
-        telefono,
-        email,
-        id_usuario_dni
-    ]);
+    const result = await pool.query(query, [nombre_completo, rol, telefono, email, id_usuario_dni]);
 
     return result.rows[0];
-}
+};
 
 // Actualizar contraseña de usuario
 export const updatePassword = async (id_usuario_dni, password_hash, salt) => {
@@ -72,41 +60,31 @@ export const updatePassword = async (id_usuario_dni, password_hash, salt) => {
         WHERE id_usuario_dni = $3
         RETURNING *`;
 
-    const result = await pool.query(query, [
-        password_hash,
-        salt,
-        id_usuario_dni
-    ]);
+    const result = await pool.query(query, [password_hash, salt, id_usuario_dni]);
 
     return result.rows[0];
-}
+};
 
 // Actualizar rol de usuario
 export const updateRol = async (id_usuario_dni, nuevoRol) => {
     const result = await pool.query(
-        'UPDATE usuarios SET rol = $1 WHERE id_usuario_dni = $2 RETURNING *',
+        "UPDATE usuarios SET rol = $1 WHERE id_usuario_dni = $2 RETURNING *",
         [nuevoRol, id_usuario_dni]
     );
     return result.rows[0];
-}
+};
 
 // Verificar si el email ya existe
 export const emailExiste = async (email) => {
-    const result = await pool.query(
-        'SELECT 1 FROM usuarios WHERE email = $1',
-        [email]
-    );
+    const result = await pool.query("SELECT 1 FROM usuarios WHERE email = $1", [email]);
     return result.rowCount > 0;
-}
+};
 
 // Verificar si el username ya existe
 export const usernameExiste = async (username) => {
-    const result = await pool.query(
-        'SELECT 1 FROM usuarios WHERE username = $1',
-        [username]
-    );
+    const result = await pool.query("SELECT 1 FROM usuarios WHERE username = $1", [username]);
     return result.rowCount > 0;
-}
+};
 
 // Buscar usuarios por nombre, email o username
 export const buscarUsuarios = async (texto) => {
@@ -122,12 +100,27 @@ export const buscarUsuarios = async (texto) => {
 
     const result = await pool.query(query, [busqueda]);
     return result.rows;
-}
+};
 
 // Eliminar usuario
 export const deleteUsuario = async (id_usuario_dni) => {
-    await pool.query('DELETE FROM usuarios WHERE id_usuario_dni = $1', [
-        id_usuario_dni,
-    ]);
-    return { mensaje: 'Usuario eliminado correctamente' };
-}
+    await pool.query("DELETE FROM usuarios WHERE id_usuario_dni = $1", [id_usuario_dni]);
+    return { mensaje: "Usuario eliminado correctamente" };
+};
+
+// Obtener usuarios mas activos (con mas reservas)
+export const getUsuariosMasActivos = async () => {
+    const result = await pool.query(`
+        SELECT 
+        u.id_usuario_dni, 
+        u.nombre_completo, 
+        u.email, 
+        u.rol,
+        COUNT(r.id_reserva) as total_reservas
+        FROM usuarios u
+        LEFT JOIN reservas r ON u.id_usuario_dni = r.id_cliente
+        GROUP BY u.id_usuario_dni, u.nombre_completo, u.email
+        ORDER BY total_reservas DESC
+        LIMIT 5`);
+    return result.rows;
+};
