@@ -88,3 +88,12 @@ export const marcarDevolucion = async (id_pago, valor = true) => {
     );
     return resultado.rows[0];
 };
+
+// Verificar si existe un pago para una reserva
+export const existePagoParaReserva = async (id_reserva) => {
+    const resultado = await pool.query(
+        `SELECT 1 FROM pagos WHERE id_reserva = $1 LIMIT 1`,
+        [id_reserva]
+    );
+    return resultado.rowCount > 0;
+};
