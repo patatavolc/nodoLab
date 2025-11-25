@@ -10,3 +10,11 @@ export const newPago = async (data) => {
     );
     return result.rows[0];
 }
+
+// Obtener todos los pagos
+export const obtenerPagos = async () => {
+    const resultado = await pool.query(
+        `SELECT * FROM pagos ORDER BY fecha_pago DESC`
+    );
+    return resultado.rows;
+};
