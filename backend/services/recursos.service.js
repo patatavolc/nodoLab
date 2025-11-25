@@ -1,44 +1,40 @@
-import pool from '../database/db.js';
+import pool from "../database/db.js";
 
 //Crear un recurso
 export const newRecurso = async (data) => {
-    const {nombre, tipo, descripcion, capacidad, precio} = data;
+    const { nombre, tipo, descripcion, capacidad, precio } = data;
 
     const result = await pool.query(
-        'INSERT INTO recursos(nombre, tipo, descripcion, capacidad, precio) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        "INSERT INTO recursos(nombre, tipo, descripcion, capacidad, precio) VALUES ($1, $2, $3, $4, $5) RETURNING *",
         [nombre, tipo, descripcion, capacidad, precio]
     );
     return result.rows[0];
-}
+};
 
 // Obtener todos los recursos
 export const getRecursos = async () => {
-    const result = await pool.query('SELECT * FROM recursos ORDER BY nombre ASC');
+    const result = await pool.query("SELECT * FROM recursos ORDER BY nombre ASC");
     return result.rows;
 };
 
 // Obtener recurso por ID
 export const getRecursoById = async (id_recurso) => {
-    const result = await pool.query(
-        'SELECT * FROM recursos WHERE id_recurso = $1',
-        [id_recurso]
-    );
+    const result = await pool.query("SELECT * FROM recursos WHERE id_recurso = $1", [id_recurso]);
     return result.rows[0];
 };
 
 // Obtener recursos por tipo
 export const getRecursosByTipo = async (tipo) => {
-    const result = await pool.query(
-        'SELECT * FROM recursos WHERE tipo = $1 ORDER BY nombre ASC',
-        [tipo]
-    );
+    const result = await pool.query("SELECT * FROM recursos WHERE tipo = $1 ORDER BY nombre ASC", [
+        tipo,
+    ]);
     return result.rows;
 };
 
 // Obtener recursos por Estado
 export const getRecursosByEstado = async (estado) => {
     const result = await pool.query(
-        'SELECT * FROM recursos WHERE estado = $1 ORDER BY nombre ASC',
+        "SELECT * FROM recursos WHERE estado = $1 ORDER BY nombre ASC",
         [estado]
     );
     return result.rows;
@@ -67,17 +63,16 @@ export const updateRecurso = async (id_recurso, data) => {
         capacidad,
         estado,
         precio_hora,
-        id_recurso
+        id_recurso,
     ]);
 
     return result.rows[0];
 };
 
-
 // Actualizar capacidad de un recurso
 export const updateCapacidad = async (id_recurso, capacidad) => {
     const result = await pool.query(
-        'UPDATE recursos SET capacidad = $1 WHERE id_recurso = $2 RETURNING *',
+        "UPDATE recursos SET capacidad = $1 WHERE id_recurso = $2 RETURNING *",
         [capacidad, id_recurso]
     );
     return result.rows[0];
@@ -86,7 +81,7 @@ export const updateCapacidad = async (id_recurso, capacidad) => {
 // Actualizar precio por hora de un recurso
 export const updatePrecioHora = async (id_recurso, precio_hora) => {
     const result = await pool.query(
-        'UPDATE recursos SET precio_hora = $1 WHERE id_recurso = $2 RETURNING *',
+        "UPDATE recursos SET precio_hora = $1 WHERE id_recurso = $2 RETURNING *",
         [precio_hora, id_recurso]
     );
     return result.rows[0];
@@ -109,6 +104,23 @@ export const buscarRecursos = async (texto) => {
 
 // Eliminar un recurso
 export const deleteRecurso = async (id_recurso) => {
-    await pool.query('DELETE FROM recursos WHERE id_recurso = $1', [id_recurso]);
-    return { mensaje: 'Recurso eliminado correctamente' };
+    await pool.query("DELETE FROM recursos WHERE id_recurso = $1", [id_recurso]);
+    return { mensaje: "Recurso eliminado correctamente" };
+};
+
+// Obtener recursos mas reservados
+export const getRecursosMasReservados = async () => {
+    const result = await pool.query(`
+        SELECT
+            rec.id_recurso,
+            rec.nombre,
+            rec.tipo,
+            COUNT(r.id_reserva) as total_reservas
+            FROM recursos rec
+            LEFT JOIN reservas r ON rec.id_recurso = r.id_recurso
+            GROUP BY rec.id_recurso, rec.nombre, rec.tipo
+            ORDER BY total_reservas DESC
+            LIMIT 5
+            `);
+    return result.rows;
 };
