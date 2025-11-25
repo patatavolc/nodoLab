@@ -25,36 +25,7 @@ Falta añadir:
     -Implemeentacion en frontedn
 
 
--
 ## FECHA:
-
-### AUTOR
-
-Pablo
-
-### ARCHIVOS MODIFICADOS
-
--
-
-### DESCRIPCION
-
-### OBSERVACIONES
-
--
-
-
-
-
-
-
-
-
-
-
-
-
-
-## FECHA:12/11/2025
 
 ### AUTOR
 
@@ -70,7 +41,7 @@ Pablo
 
 ### DESCRIPCION
 modificacion de raiz con mainRouter
-creacion:
+creacion de los archivos:
     usuariosRouter
     mainRouter
     usuarios.routes.js
@@ -78,6 +49,108 @@ creacion:
     recursos.routes.js
     reservas.routes.js
 
+se crean todas las rutas de los diferentes archivos con los metodos get, post y update
+
 ### OBSERVACIONES
 
 -
+-
+## FECHA:
+
+### AUTOR
+
+Pablo
+
+### ARCHIVOS MODIFICADOS
+
+-datosBancarios.controller
+- detallesFactura.controller
+- facturas.controller
+- reservas.controller
+- usuarios.controller
+
+### DESCRIPCION
+
+Se crean todos los controladores de los archivos en referencia a las rutas creadas con anterioridad, solamente se crea el create
+
+### OBSERVACIONES
+
+## FECHA:
+
+### AUTOR
+
+Pablo
+
+### ARCHIVOS MODIFICADOS
+
+-datosBancarios.controller
+- detallesFactura.controller
+- facturas.controller
+- reservas.controller
+- usuarios.controller
+
+### DESCRIPCION
+
+Se crean todos los get, post y update de los diferntes archivos
+
+### OBSERVACIONES
+
+
+
+## FECHA:
+
+### AUTOR
+
+Pablo
+
+### ARCHIVOS MODIFICADOS
+
+- index.js
+
+### DESCRIPCION
+
+Se modifica para implementar el archivo de mainRoutes donde estan todas las rutas de los diferentes archivos según su método
+
+### OBSERVACIONES
+
+-
+## FECHA:
+
+### AUTOR
+
+Pablo
+
+### ARCHIVOS MODIFICADOS
+
+- logger.js
+- index.js
+
+### DESCRIPCION
+
+Se modifica para implementar el archivo index para incorgporar los loogers y se crea el archivo looger que guarda en la base de adtos, ip, metodo url. fecha
+
+### OBSERVACIONES
+
+-
+## FECHA:
+
+### AUTOR
+
+Pablo
+
+### ARCHIVOS MODIFICADOS
+
+- .controller
+
+### DESCRIPCION
+
+Se modifican archivos .controller implementando los services
+### OBSERVACIONES
+
+-
+
+
+
+
+
+
