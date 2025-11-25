@@ -91,3 +91,18 @@ export const updatePrecioHora = async (id_recurso, precio_hora) => {
     );
     return result.rows[0];
 };
+
+// Buscar recursos por nombre o descripcion
+export const buscarRecursos = async (texto) => {
+    const busqueda = `%${texto}%`;
+
+    const query = `
+        SELECT * FROM recursos
+        WHERE 
+            nombre ILIKE $1 OR
+            descripcion ILIKE $1
+        ORDER BY nombre ASC`;
+
+    const result = await pool.query(query, [busqueda]);
+    return result.rows;
+};
