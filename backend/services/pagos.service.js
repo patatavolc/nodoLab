@@ -79,3 +79,12 @@ export const actualizarPago = async (id_pago, data) => {
 
     return resultado.rows[0];
 };
+
+// Marcar/desmarcar devolución
+export const marcarDevolucion = async (id_pago, valor = true) => {
+    const resultado = await pool.query(
+        `UPDATE pagos SET devolucion = $1 WHERE id_pago = $2 RETURNING *`,
+        [valor, id_pago]
+    );
+    return resultado.rows[0];
+};
