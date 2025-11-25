@@ -16,3 +16,62 @@ export const createRecurso = (req, res) => {
         res.status(400).send({error: 'Faltan datos obligatorios'});
     }
 }
+
+
+//Obtener todos recursos
+export const getRecursos = (req,res) => {
+
+    getAllRecursos()
+        .then((recursos) =>{
+            res.send(recursos);
+        });
+}
+
+//Obtener recurso por id
+export const getRecursoById = (req, res) => {
+    const idRecurso = req.params.idRecurso;
+
+    if(idRecurso){
+
+        getRecursoByIdService()
+            .then((recurso) =>{
+                res.status(200).send(recurso);
+            })
+            .catch((error) => {
+                res.status(400).send({error: error.message});
+            })
+        } else {
+            res.status(400).send({error:'Faltan datos obligatorios'});
+    }
+}
+
+//Obtener recurso by id tipo
+export const getRecursosByTipo = (req, res) => {
+    const idRecurso= req.params.idRecurso;
+
+    if(idRecurso){
+        getRecursosByTipoService()
+            .then((recurso) =>{
+                res.status(200).send(recurso);
+            })
+            .catch((error) => {
+                res.status(400).send({error: error.message});
+            })
+        } else {
+            res.status(400).send({error:'Faltan datos obligatorios'});
+    }
+}
+
+//Actualizar recurso
+export const updateRecurso = (req, res) => {
+    const data = req.body;
+    const idRecurso = req.params.idRecurso;
+
+    updatePagoService(idRecurso, data)
+        .then((updatedRecurso) =>{
+            res.status(200).send(updatedRecurso);
+        })
+        .catch((error) => {
+            res.status(400).send({error: error.message});
+        });
+}
