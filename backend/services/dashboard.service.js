@@ -44,3 +44,23 @@ export const fetchOccupancyRate = async () => {
     const rate = parseFloat(res.rows[0].percentage || 0);
     return Math.round(rate);
 };
+
+// Obtiene el conteo de reservas por dia para los ultimos 7 dias
+export const fetchDailyBookins = async () => {
+    const res = await pool.query(`
+        SELECT
+            DATE(fecha_inicio) as date
+            COUNT(*) as count
+        FROM reservas
+        WHERE fecha_inicio >= CURRENT_DATE - INTERVAL '7 days'
+        GROUD BY DATE(fecha_inicio)
+        ORDER BY date ASC
+        `);
+
+    // Formateo de los resultados para el grafico
+    return res.rows.map((row) => ({
+        name: row.date,
+        bookings: parseInt(row.count),
+    }));
+};
+
