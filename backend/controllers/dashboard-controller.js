@@ -35,4 +35,12 @@ export const getDashboardRecursos = async (req, res) => {
     }
 };
 
+export const getDashboardReservas = async (req, res) => {
+    try {
+        const data = await getDashboardReservas();
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({error: error.message });
+    }
+};
 
