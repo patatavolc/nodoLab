@@ -22,4 +22,13 @@ export const fetchUpcomingBookins = async () => {
     return parseInt(res.rows[0].count || 0);
 };
 
-
+// Obtiene el numero de reservas sin pago asociado que no estan canceladas
+export const fetchPendingPayments = async () => {
+    const res = await pool.query(`
+        SELECT COUNT(*) as count
+        FROM reservas r
+        LEFT JOIN pagos p ON r.id_reserva = p.id_reserva
+        WHERE p.id_pago IS NULL AND r.estado != 'cancelada'
+        `);
+    return parseInt(res.rows[0].count || 0);
+};
