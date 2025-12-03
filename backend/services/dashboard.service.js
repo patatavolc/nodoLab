@@ -64,3 +64,17 @@ export const fetchDailyBookins = async () => {
     }));
 };
 
+// Obtiene el listado de la actividad reciente (ultimas 10 reservas con detalles)
+export const fetchRecentActivity = async () => {
+    const res = await pool.query(`
+        SELECT
+            r.id_reserva, r.fecha_inicio, r.estado
+            u.nombre_completo, rec.nombre as recurso_nombre
+        FROM reservas r
+        JOIN usuarios u ON r.id_usuario = u.id_usuario_dni
+        JOIN recursos rec ON r.id_recurso = rec.id_recurso
+        ORDER BY r.fecha_inicio DESC
+        LIMIT 10
+        `);
+    return res.rows;
+};
