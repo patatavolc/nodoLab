@@ -26,7 +26,7 @@ export const getDashboardResumen = async (req, res) => {
 
 export const getDashboardFinanzas = async (req, res) => {
     try {
-        const data = await getDashboardFinanzas();
+        const data = await getStatsFinanzas();
         res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -35,7 +35,7 @@ export const getDashboardFinanzas = async (req, res) => {
 
 export const getDashboardRecursos = async (req, res) => {
     try {
-        const data = await getDashboardRecursos();
+        const data = await getStatsRecursos();
         res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -44,7 +44,7 @@ export const getDashboardRecursos = async (req, res) => {
 
 export const getDashboardReservas = async (req, res) => {
     try {
-        const data = await getDashboardReservas();
+        const data = await getStatsReservas();
         res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ error: error.message });
