@@ -24,6 +24,15 @@ export const getDashboardFinanzas = async (req, res) => {
     } catch(error) {
         res.status(500).json({error: error.message });
     }
-}
+};
+
+export const getDashboardRecursos = async (req, res) => {
+    try {
+        const data = await getDashboardRecursos();
+        res.status(200).json(data);
+    } catch(error) {
+        res.status(500).json({error: error.message });
+    }
+};
 
 
