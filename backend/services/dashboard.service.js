@@ -10,3 +10,16 @@ export const fetchCheckInsToday = async () => {
         `);
     return parseInt(res.rows[0].count || 0);
 };
+
+// Obtiene el numero de reservas proximas (7 dias) que no estan canceladas
+export const fetchUpcomingBookins = async () => {
+    const res = await pool.query(`
+        SELECT COUNT(*) as count
+        FROM reservas
+        WHERE fecha_inicio BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL '7 days'
+        AND estado != 'cancelada'
+        `);
+    return parseInt(res.rows[0].count || 0);
+};
+
+
