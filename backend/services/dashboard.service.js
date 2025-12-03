@@ -78,3 +78,5 @@ export const fetchRecentActivity = async () => {
         `);
     return res.rows;
 };
+
+// TODO: Funciones orquestacion con Promise.all (para ejecutar estas funciones a la vez)
