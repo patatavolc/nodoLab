@@ -32,3 +32,15 @@ export const fetchPendingPayments = async () => {
         `);
     return parseInt(res.rows[0].count || 0);
 };
+
+// Calcula el porcentaje de recursos ocupados
+export const fetchOccupancyRate = async () => {
+    const res = await pool.query(`
+        SELECT
+            COUNT(CASE WHEN estado = 'ocupado' THEN 1 END::float /
+            NULLIF(COUNT(*)::float, 0) * 100 as percentage
+        FROM recursos
+        `);
+    const rate = parseFloat(res.rows[0].percentage || 0);
+    return Math.round(rate);
+};
