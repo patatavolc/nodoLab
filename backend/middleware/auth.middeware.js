@@ -1,11 +1,13 @@
+import jwt from "jsonwebtoken";
 import { generateFingerprint } from "../controllers/auth_controller.js";
 
 export function authMiddleware(req, res, next) {
-    const token = req.cookies.nodolab_auth_token;
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
 
     if (!token) {
         return res.json({ valid: false, reason: "No Token" });
-        //redirect a la pagina de login en el frontend
+        // frontend should redirect to login
     }
 
     try {
@@ -14,13 +16,8 @@ export function authMiddleware(req, res, next) {
         const actualFingerPrint = generateFingerprint(req);
 
         if (actualFingerPrint !== decoded_token.fingerPrint) {
-            res.clearCookie("myapp_auth_token", {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production" ? true : false,
-                sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
-            });
-            return res.json({ valid: false, reason: "Enviroment change" });
-            //redirect a la pagina de login en el frontend
+            return res.json({ valid: false, reason: "Environment change" });
+            // frontend should clear localStorage + redirect to login
         }
 
         req.user = decoded_token.user;
@@ -28,7 +25,9 @@ export function authMiddleware(req, res, next) {
     } catch (err) {
         if (err.name === "TokenExpiredError") {
             return res.json({ valid: false, reason: "expired" });
-        } else return res.json({ valid: false, reason: "invalid" });
-        //redirect a la pagina de login en el frontend
+        } else {
+            return res.json({ valid: false, reason: "invalid" });
+        }
+        // frontend should clear localStorage + redirect to login
     }
 }
