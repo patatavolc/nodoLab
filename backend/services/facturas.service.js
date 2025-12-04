@@ -11,7 +11,8 @@ export const newFactura = async (data) => {
     return result.rows[0];
 }
 
-export const getReservas = async () => {
+//Obtener todas las facturas
+export const getFacturas = async () => {
     const result = await pool.query("SELECT * FROM facturas ORDER BY fecha_factura DESC");
     return result.rows;
 };
