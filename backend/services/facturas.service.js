@@ -16,3 +16,12 @@ export const getFacturas = async () => {
     const result = await pool.query("SELECT * FROM facturas ORDER BY fecha_factura DESC");
     return result.rows;
 };
+
+//Obtener facturas por ID
+export const getFacturasById = async (id_factura) => {
+    const result = await pool.query(
+        "SELECT * FROM facturas WHERE id_factura = $1", 
+        [id_factura]
+    );
+    return result.rows[0];
+};
