@@ -13,13 +13,13 @@ export const newUsuario = async (data) => {
 };
 
 // Obtener todos los usuarios
-export const getUsuarios = async () => {
+export const getUsuariosService = async () => {
     const result = await pool.query("SELECT * FROM usuarios ORDER BY nombre_completo ASC");
     return result.rows;
 };
 
 // Obtener usuario por DNI
-export const getUsuarioByDNI = async (id_usuario_dni) => {
+export const getUsuarioByDNIService = async (id_usuario_dni) => {
     const result = await pool.query("SELECT * FROM usuarios WHERE id_usuario_dni = $1", [
         id_usuario_dni,
     ]);
@@ -27,13 +27,13 @@ export const getUsuarioByDNI = async (id_usuario_dni) => {
 };
 
 // Obtener usuario por username
-export const getUsuarioByUsername = async (username) => {
+export const getUsuarioByUsernameService = async (username) => {
     const result = await pool.query("SELECT * FROM usuarios WHERE username = $1", [username]);
     return result.rows[0];
 };
 
 // Actualizar usuario
-export const updateUsuario = async (id_usuario_dni, data) => {
+export const updateUsuarioService = async (id_usuario_dni, data) => {
     const { nombre_completo, rol, telefono, email } = data;
 
     const query = `
