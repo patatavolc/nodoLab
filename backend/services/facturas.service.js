@@ -51,3 +51,11 @@ export const updateFactura = async (id_factura, data) => {
     ]);
     return result.rows[0];
 };
+
+// Eliminar una factura
+export const eliminarFactura = async (id_factura) => {
+    await pool.query(
+        "DELETE FROM facturas WHERE id_factura = $1", 
+        [id_factura]);
+    return { message: "Reserva eliminada correctamente" };
+};
