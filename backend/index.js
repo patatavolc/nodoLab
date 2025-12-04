@@ -2,7 +2,6 @@ import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import initializeSocket from "./sockets/manager.socket.js";
-import cookieParser from "cookie-parser";
 import mainRouter from "./routes/mainRouter.js";
 import cors from "cors";
 import logger from './middleware/logger.js';
@@ -30,7 +29,6 @@ const io = new Server(server, {
 initializeSocket(io);
 
 app.use(express.json());
-app.use(cookieParser());
 
 app.use('/api', mainRouter);
 app.use(logger);
