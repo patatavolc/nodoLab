@@ -24,9 +24,16 @@ export default function Login() {
             });
 
             const data = await response.json();
+            console.log(data);
+            console.log("Hi im alive");
 
             if (!response.ok) {
                 throw new Error(data.message || "Error al iniciar sesión");
+            }
+
+            if (data.token) {
+                localStorage.setItem("nodolab_auth_token", data.token);
+                console.log("Token saved to localStorage");
             }
 
             //Guardar el token en localstorage no es necesario ya que el controlador de auth lo guarda en una cookie llamada nodolab_auth_token --Carlos

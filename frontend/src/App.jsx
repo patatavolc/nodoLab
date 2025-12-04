@@ -5,27 +5,22 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import { useEffect, useState } from "react";
 
 function App() {
-    const [cookieData, setCookieData] = useState(null);
+    const [tokenData, setTokenData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const checkCookie = async () => {
+        const checkToken = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/getCookie", {
-                    method: "GET",
-                    credentials: "include",
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setCookieData(data);
-                }
+                const token = localStorage.getItem("nodolab_auth_token");
+                    setTokenData(token);
+                
             } catch (err) {
-                console.error("Error comprobando cookie:", err);
+                console.error("Error comprobando token:", err);
             } finally {
                 setLoading(false);
             }
         };
-        checkCookie();
+        checkToken();
     }, []);
 
     if (loading) return <div>Cargando...</div>;
@@ -40,7 +35,7 @@ function App() {
                 <Route
                     path="/dashboard"
                     element={
-                        <PrivateRoute cookieData={cookieData}>
+                        <PrivateRoute tokenData={tokenData}>
                             <div>Dashboard (crear componente)</div>
                         </PrivateRoute>
                     }
@@ -50,7 +45,7 @@ function App() {
                 <Route
                     path="/"
                     element={
-                        cookieData ? (
+                        tokenData ? (
                             <Navigate to="/dashboard" replace />
                         ) : (
                             <Navigate to="/login" replace />
@@ -67,6 +62,6 @@ function App() {
 
 export default App;
 
-function PrivateRoute({ children, cookieData }) {
-    return cookieData ? children : <Navigate to="/login" replace />;
+function PrivateRoute({ children, tokenData }) {
+    return tokenData ? children : <Navigate to="/login" replace />;
 }
