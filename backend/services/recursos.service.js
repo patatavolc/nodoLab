@@ -12,19 +12,19 @@ export const newRecurso = async (data) => {
 };
 
 // Obtener todos los recursos
-export const getRecursos = async () => {
+export const getAllRecursosService = async () => {
     const result = await pool.query("SELECT * FROM recursos ORDER BY nombre ASC");
     return result.rows;
 };
 
 // Obtener recurso por ID
-export const getRecursoById = async (id_recurso) => {
+export const getRecursoByIdService = async (id_recurso) => {
     const result = await pool.query("SELECT * FROM recursos WHERE id_recurso = $1", [id_recurso]);
     return result.rows[0];
 };
 
 // Obtener recursos por tipo
-export const getRecursosByTipo = async (tipo) => {
+export const getRecursosByTipoService = async (tipo) => {
     const result = await pool.query("SELECT * FROM recursos WHERE tipo = $1 ORDER BY nombre ASC", [
         tipo,
     ]);

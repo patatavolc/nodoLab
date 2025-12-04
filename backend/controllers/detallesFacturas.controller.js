@@ -1,4 +1,4 @@
-import {} from '../services/detallesFacturas.services.js';
+//import {} from '../services/detallesFacturas.services.js';
 
 //Crear factura
 export const createDetallesFactura = (req,res) => {
@@ -20,7 +20,7 @@ export const createDetallesFactura = (req,res) => {
 //Obtener todos detalles de facturas
 export const getDetallesFacturas = (req,res) => {
 
-    getAllDetallesFacturas()
+    getAllDetallesFacturasService()
         .then((detallesFactura) =>{
             res.send(detallesFactura);
         });

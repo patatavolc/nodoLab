@@ -1,4 +1,4 @@
-import pool from 'pg';
+import pool from '../database/db.js';
 
 const newLog = async (data) => {
     const {id_usuario, fecha_log, metodo, ip, url} = data;

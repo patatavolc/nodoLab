@@ -1,4 +1,4 @@
-import { newRecurso } from "../services/recursos.service.js";
+import { newRecurso, getAllRecursosService, getRecursoByIdService, getRecursosByTipoService, } from "../services/recursos.service.js";
 
 //Crear nuevo recurso
 export const createRecurso = (req, res) => {
@@ -21,7 +21,7 @@ export const createRecurso = (req, res) => {
 //Obtener todos recursos
 export const getRecursos = (req,res) => {
 
-    getAllRecursos()
+    getAllRecursosService()
         .then((recursos) =>{
             res.send(recursos);
         });
