@@ -147,9 +147,10 @@ export const usernameExiste = async (username) => {
 
 // Buscar usuarios por nombre, email o username
 export const buscarUsuarios = async (texto) => {
-    const busqueda = `%${texto}%`;
+    try {
+        const busqueda = `%${texto}%`;
 
-    const query = `
+        const query = `
         SELECT * FROM usuarios 
         WHERE 
             nombre_completo ILIKE $1 OR
@@ -157,19 +158,29 @@ export const buscarUsuarios = async (texto) => {
             username ILIKE $1
         ORDER BY nombre_completo ASC`;
 
-    const result = await pool.query(query, [busqueda]);
-    return result.rows;
+        const result = await pool.query(query, [busqueda]);
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio buscarUsuarios", error.message);
+        throw new Error(`Error al buscar un usuario por texto: ${error.message}`);
+    }
 };
 
 // Eliminar usuario
 export const deleteUsuario = async (id_usuario_dni) => {
-    await pool.query("DELETE FROM usuarios WHERE id_usuario_dni = $1", [id_usuario_dni]);
-    return { mensaje: "Usuario eliminado correctamente" };
+    try {
+        await pool.query("DELETE FROM usuarios WHERE id_usuario_dni = $1", [id_usuario_dni]);
+        return { mensaje: "Usuario eliminado correctamente" };
+    } catch (error) {
+        console.error("Error en el servicio deleteUsuario", error.message);
+        throw new Error(`Error al eliminar un usuario: ${error.message}`);
+    }
 };
 
 // Obtener usuarios mas activos (con mas reservas)
 export const getUsuariosMasActivos = async () => {
-    const result = await pool.query(`
+    try {
+        const result = await pool.query(`
         SELECT 
         u.id_usuario_dni, 
         u.nombre_completo, 
@@ -181,5 +192,9 @@ export const getUsuariosMasActivos = async () => {
         GROUP BY u.id_usuario_dni, u.nombre_completo, u.email
         ORDER BY total_reservas DESC
         LIMIT 5`);
-    return result.rows;
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getUsuariosMasActivos", error.message);
+        throw new Error(`Error al obtener los usuarios mas activos: ${error.message}`);
+    }
 };
