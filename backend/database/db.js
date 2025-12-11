@@ -1,18 +1,13 @@
-import pg from 'pg';
+import pg from "pg";
 
-const {Pool} = pg;
+const { Pool } = pg;
 
-const config = {
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+// Usar connection string de Supabase
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
     ssl: {
-        rejectUnauthorized: false // <-- Obligatorio para supabase
-    }
-}
-
-const pool = new Pool(config);
+        rejectUnauthorized: false, // <-- Obligatorio para supabase
+    },
+});
 
 export default pool;
