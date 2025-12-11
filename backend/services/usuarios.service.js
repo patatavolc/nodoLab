@@ -2,20 +2,38 @@ import pool from "../database/db.js";
 
 //Crear nuevo usuario
 export const newUsuario = async (data) => {
-    const { id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt } =
-        data;
+    try {
+        const {
+            id_usuario_dni,
+            rol,
+            nombre_completo,
+            username,
+            telefono,
+            email,
+            password_hash,
+            salt,
+        } = data;
 
-    const result = await pool.query(
-        "INSERT INTO usuarios (id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-        [id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt]
-    );
-    return result.rows[0];
+        const result = await pool.query(
+            "INSERT INTO usuarios (id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+            [id_usuario_dni, rol, nombre_completo, username, telefono, email, password_hash, salt]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio newUsuario", error.message);
+        throw new Error(`Error al crear un usuario nuevo: ${error.message}`);
+    }
 };
 
 // Obtener todos los usuarios
 export const getUsuariosService = async () => {
-    const result = await pool.query("SELECT * FROM usuarios ORDER BY nombre_completo ASC");
-    return result.rows;
+    try {
+        const result = await pool.query("SELECT * FROM usuarios ORDER BY nombre_completo ASC");
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getUsuarios", error.message);
+        throw new Error(`Error al obtener los usuarios: ${error.message}`);
+    }
 };
 
 // Obtener usuario por DNI
