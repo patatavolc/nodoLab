@@ -1,11 +1,16 @@
-import { newFactura } from "../services/facturas.service.js";
+import {
+    newFactura,
+    getFacturas as getAllFacturas,
+    getFacturasById as getFacturaByIdService,
+    updateFactura as updateFacturaService,
+} from "../services/facturas.service.js";
 
 //Crear Factura
 export const createFactura = (req, res) => {
     const data = req.body;
 
     if (data.id_reserva) {
-        newFacturaService(data)
+        newFactura(data)
             .then((newFactura) => {
                 res.status(201).send(newFactura);
             })

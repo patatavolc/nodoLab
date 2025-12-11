@@ -1,4 +1,11 @@
-import { newReserva } from "../services/reservas.service.js";
+import {
+    newReserva,
+    getReservas as getAllReservas,
+    getReservaById as getReservaIdService,
+    getReservasByUsuario as getReservaDni,
+    getReservasByRecurso as getReservaIdRecursoService,
+    updateReserva as updateReservaService,
+} from "../services/reservas.service.js";
 
 // Crear una reserva
 export const createReserva = (req, res) => {
@@ -24,7 +31,7 @@ export const getReservas = (req, res) => {
             res.send(reservas);
         })
         .catch((error) => {
-            res.status(500).send({error: error.message});
+            res.status(500).send({ error: error.message });
         });
 };
 
