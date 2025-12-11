@@ -1,10 +1,11 @@
+import "dotenv/config";
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import initializeSocket from "./sockets/manager.socket.js";
 import mainRouter from "./routes/mainRouter.js";
 import cors from "cors";
-import logger from './middleware/logger.js';
+import logger from "./middleware/logger.js";
 
 const app = express();
 const PORT = 3000;
@@ -30,7 +31,7 @@ initializeSocket(io);
 
 app.use(express.json());
 
-app.use('/api', mainRouter);
+app.use("/api", mainRouter);
 app.use(logger);
 
 app.get("/", (req, res) => {
