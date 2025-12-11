@@ -38,23 +38,34 @@ export const getUsuariosService = async () => {
 
 // Obtener usuario por DNI
 export const getUsuarioByDNIService = async (id_usuario_dni) => {
-    const result = await pool.query("SELECT * FROM usuarios WHERE id_usuario_dni = $1", [
-        id_usuario_dni,
-    ]);
-    return result.rows[0];
+    try {
+        const result = await pool.query("SELECT * FROM usuarios WHERE id_usuario_dni = $1", [
+            id_usuario_dni,
+        ]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servico getUsuarioByDNI:", error.message);
+        throw new Error(`Error al obtener un usuario por DNI: ${error.message}`);
+    }
 };
 
 // Obtener usuario por username
 export const getUsuarioByUsernameService = async (username) => {
-    const result = await pool.query("SELECT * FROM usuarios WHERE username = $1", [username]);
-    return result.rows[0];
+    try {
+        const result = await pool.query("SELECT * FROM usuarios WHERE username = $1", [username]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servico getUsuarioByUsername", error.message);
+        throw new Error(`Error al obtener un usuario por su username: ${error.message}`);
+    }
 };
 
 // Actualizar usuario
 export const updateUsuarioService = async (id_usuario_dni, data) => {
-    const { nombre_completo, rol, telefono, email } = data;
+    try {
+        const { nombre_completo, rol, telefono, email } = data;
 
-    const query = `
+        const query = `
         UPDATE usuarios
         SET 
             nombre_completo = COALESCE($1, nombre_completo),
@@ -64,23 +75,38 @@ export const updateUsuarioService = async (id_usuario_dni, data) => {
         WHERE id_usuario_dni = $5
         RETURNING *`;
 
-    const result = await pool.query(query, [nombre_completo, rol, telefono, email, id_usuario_dni]);
+        const result = await pool.query(query, [
+            nombre_completo,
+            rol,
+            telefono,
+            email,
+            id_usuario_dni,
+        ]);
 
-    return result.rows[0];
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio updateUsuario:", error.message);
+        throw new Error(`Error al actualizar un usuario: ${error.message}`);
+    }
 };
 
 // Actualizar contraseña de usuario
 export const updatePassword = async (id_usuario_dni, password_hash, salt) => {
-    const query = `
+    try {
+        const query = `
         UPDATE usuarios
         SET password_hash = $1,
             salt = $2
         WHERE id_usuario_dni = $3
         RETURNING *`;
 
-    const result = await pool.query(query, [password_hash, salt, id_usuario_dni]);
+        const result = await pool.query(query, [password_hash, salt, id_usuario_dni]);
 
-    return result.rows[0];
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio updatePassword", error.message);
+        throw new Error(`Error al actualizar la password de un usuario: ${error.message}`);
+    }
 };
 
 // Actualizar rol de usuario
