@@ -111,23 +111,38 @@ export const updatePassword = async (id_usuario_dni, password_hash, salt) => {
 
 // Actualizar rol de usuario
 export const updateRol = async (id_usuario_dni, nuevoRol) => {
-    const result = await pool.query(
-        "UPDATE usuarios SET rol = $1 WHERE id_usuario_dni = $2 RETURNING *",
-        [nuevoRol, id_usuario_dni]
-    );
-    return result.rows[0];
+    try {
+        const result = await pool.query(
+            "UPDATE usuarios SET rol = $1 WHERE id_usuario_dni = $2 RETURNING *",
+            [nuevoRol, id_usuario_dni]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio updateRol", error.message);
+        throw new Error(`Error al actualizar el rol de un usuario: ${error.message}`);
+    }
 };
 
 // Verificar si el email ya existe
 export const emailExiste = async (email) => {
-    const result = await pool.query("SELECT 1 FROM usuarios WHERE email = $1", [email]);
-    return result.rowCount > 0;
+    try {
+        const result = await pool.query("SELECT 1 FROM usuarios WHERE email = $1", [email]);
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error("Error en el servicio emailExiste", error.message);
+        throw new Error(`Error al verificar que un email existe: ${error.message}`);
+    }
 };
 
 // Verificar si el username ya existe
 export const usernameExiste = async (username) => {
-    const result = await pool.query("SELECT 1 FROM usuarios WHERE username = $1", [username]);
-    return result.rowCount > 0;
+    try {
+        const result = await pool.query("SELECT 1 FROM usuarios WHERE username = $1", [username]);
+        return result.rowCount > 0;
+    } catch (error) {
+        console.error("Error en el servicio usernameExiste", error.message);
+        throw new Error(`Error al verificar que el username existe: ${error.message}`);
+    }
 };
 
 // Buscar usuarios por nombre, email o username
