@@ -18,22 +18,40 @@ export const newRecurso = async (data) => {
 
 // Obtener todos los recursos
 export const getAllRecursosService = async () => {
-    const result = await pool.query("SELECT * FROM recursos ORDER BY nombre ASC");
-    return result.rows;
+    try {
+        const result = await pool.query("SELECT * FROM recursos ORDER BY nombre ASC");
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getAllRecursos:", error.message);
+        throw new Error(`Error al obtener todos los recursos: ${error.message}`);
+    }
 };
 
 // Obtener recurso por ID
 export const getRecursoByIdService = async (id_recurso) => {
-    const result = await pool.query("SELECT * FROM recursos WHERE id_recurso = $1", [id_recurso]);
-    return result.rows[0];
+    try {
+        const result = await pool.query("SELECT * FROM recursos WHERE id_recurso = $1", [
+            id_recurso,
+        ]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio getRecursoById:", error.message);
+        throw new Error(`Error al obtener recurso por id: ${error.message}`);
+    }
 };
 
 // Obtener recursos por tipo
 export const getRecursosByTipoService = async (tipo) => {
-    const result = await pool.query("SELECT * FROM recursos WHERE tipo = $1 ORDER BY nombre ASC", [
-        tipo,
-    ]);
-    return result.rows;
+    try {
+        const result = await pool.query(
+            "SELECT * FROM recursos WHERE tipo = $1 ORDER BY nombre ASC",
+            [tipo]
+        );
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getRecursoByTipo:", error.message);
+        throw new Error(`Error al obtener el recurso por tipo: ${error.message}`);
+    }
 };
 
 // Obtener recursos por Estado
