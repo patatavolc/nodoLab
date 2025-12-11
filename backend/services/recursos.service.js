@@ -2,13 +2,18 @@ import pool from "../database/db.js";
 
 //Crear un recurso
 export const newRecurso = async (data) => {
-    const { nombre, tipo, descripcion, capacidad, precio } = data;
+    try {
+        const { nombre, tipo, descripcion, capacidad, precio } = data;
 
-    const result = await pool.query(
-        "INSERT INTO recursos(nombre, tipo, descripcion, capacidad, precio) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-        [nombre, tipo, descripcion, capacidad, precio]
-    );
-    return result.rows[0];
+        const result = await pool.query(
+            "INSERT INTO recursos(nombre, tipo, descripcion, capacidad, precio) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [nombre, tipo, descripcion, capacidad, precio]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio newRecurso:", error.message);
+        throw new Error(`Error al crear un recurso nuevo: ${error.message}`);
+    }
 };
 
 // Obtener todos los recursos
