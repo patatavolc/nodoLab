@@ -151,13 +151,19 @@ export const buscarRecursos = async (texto) => {
 
 // Eliminar un recurso
 export const deleteRecurso = async (id_recurso) => {
-    await pool.query("DELETE FROM recursos WHERE id_recurso = $1", [id_recurso]);
-    return { mensaje: "Recurso eliminado correctamente" };
+    try {
+        await pool.query("DELETE FROM recursos WHERE id_recurso = $1", [id_recurso]);
+        return { mensaje: "Recurso eliminado correctamente" };
+    } catch (error) {
+        console.error("Error en el servicio deleteRecurso", error.message);
+        throw new Error(`Error al eliminar un recurso: ${error.message}`);
+    }
 };
 
 // Obtener recursos mas reservados
 export const getRecursosMasReservados = async () => {
-    const result = await pool.query(`
+    try {
+        const result = await pool.query(`
         SELECT
             rec.id_recurso,
             rec.nombre,
@@ -169,12 +175,17 @@ export const getRecursosMasReservados = async () => {
         ORDER BY total_reservas DESC
         LIMIT 5
             `);
-    return result.rows;
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getRecursosMasReservados:", error.message);
+        throw new Error(`Error al obtener los servicios mas reservados: ${error.message}`);
+    }
 };
 
 // Obtener la tasa de ocupacion de recursos
 export const getTasaOcupacionRecursos = async () => {
-    const result = await pool.query(`
+    try {
+        const result = await pool.query(`
         SELECT
             rec.id_recurso,
             rec.nombre,
@@ -186,5 +197,9 @@ export const getTasaOcupacionRecursos = async () => {
         GROUP BY rec.id_recurso, rec.nombre, rec.tipo
         ORDER BY reservas_totales DESC
         `);
-    return result.rows;
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getTasaOcupacionRecursos", error.messsage);
+        throw new Error(`Error al obtener la tasa de ocupacion de los recursos: ${error.message}`);
+    }
 };
