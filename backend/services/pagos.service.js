@@ -40,17 +40,23 @@ export const obtenerPagoPorId = async (id_pago) => {
 
 // Obtener pagos por ID de reserva
 export const obtenerPagosPorReserva = async (id_reserva) => {
-    const resultado = await pool.query(
-        `SELECT * FROM pagos WHERE id_reserva = $1 ORDER BY fecha_pago DESC`,
-        [id_reserva]
-    );
-    return resultado.rows;
+    try {
+        const resultado = await pool.query(
+            `SELECT * FROM pagos WHERE id_reserva = $1 ORDER BY fecha_pago DESC`,
+            [id_reserva]
+        );
+        return resultado.rows;
+    } catch (error) {
+        console.error("Error en el servicio obtenerPagosPorReserva", error.message);
+        throw new Error(`Error al obtener pagos por id de reserva: ${error.message}`);
+    }
 };
 
 // Obtener ingresos por mes (últimos 6 meses)
 export const getIngresosPorMes = async () => {
-    const result = await pool.query(
-        `
+    try {
+        const result = await pool.query(
+            `
         SELECT
             TO_CHAR(fecha_pago, 'YYYY-MM') as mes,
             SUM(importe) as total
@@ -60,16 +66,21 @@ export const getIngresosPorMes = async () => {
         GROUP BY TO_CHAR(fecha_pago, 'YYYY-MM')
         ORDER BY mes DESC
     `,
-        ["completado"]
-    );
-    return result.rows;
+            ["completado"]
+        );
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getIngresosPorMes", error.message);
+        throw new Error(`Error al obtener los ingresos por mes: ${error.message}`);
+    }
 };
 
 // Actualizar pago
 export const actualizarPago = async (id_pago, data) => {
-    const { precio_total, metodo_pago, fecha_pago, devolucion } = data;
+    try {
+        const { precio_total, metodo_pago, fecha_pago, devolucion } = data;
 
-    const query = `
+        const query = `
         UPDATE pagos
         SET
             precio_total = COALESCE($1, precio_total),
@@ -79,15 +90,19 @@ export const actualizarPago = async (id_pago, data) => {
         WHERE id_pago = $5
         RETURNING *`;
 
-    const resultado = await pool.query(query, [
-        precio_total,
-        metodo_pago,
-        fecha_pago,
-        devolucion,
-        id_pago,
-    ]);
+        const resultado = await pool.query(query, [
+            precio_total,
+            metodo_pago,
+            fecha_pago,
+            devolucion,
+            id_pago,
+        ]);
 
-    return resultado.rows[0];
+        return resultado.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio actualizarPago", error.message);
+        throw new Error(`Error al actualizar un pago: ${error.message}`);
+    }
 };
 
 // Marcar/desmarcar devolución
