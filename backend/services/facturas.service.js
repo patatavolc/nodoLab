@@ -42,9 +42,10 @@ export const getFacturasById = async (id_factura) => {
 
 // Actualizar una factura
 export const updateFactura = async (id_factura, data) => {
-    const { fecha_factura, total_bruto, total_IVA, total_neto, tipo } = data;
+    try {
+        const { fecha_factura, total_bruto, total_IVA, total_neto, tipo } = data;
 
-    const query = `
+        const query = `
         UPDATE reservas
         SET 
             fecha_factura = COALESCE($1, fecha_factura),
@@ -55,19 +56,28 @@ export const updateFactura = async (id_factura, data) => {
         WHERE id_factura = $6
         RETURNING *`;
 
-    const result = await pool.query(query, [
-        fecha_factura,
-        total_bruto,
-        total_IVA,
-        total_neto,
-        tipo,
-        id_factura,
-    ]);
-    return result.rows[0];
+        const result = await pool.query(query, [
+            fecha_factura,
+            total_bruto,
+            total_IVA,
+            total_neto,
+            tipo,
+            id_factura,
+        ]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio updateFactura", error.message);
+        throw new Error(`Error al actualizar una factura: ${error.message}`);
+    }
 };
 
 // Eliminar una factura
 export const eliminarFactura = async (id_factura) => {
-    await pool.query("DELETE FROM facturas WHERE id_factura = $1", [id_factura]);
-    return { message: "Reserva eliminada correctamente" };
+    try {
+        await pool.query("DELETE FROM facturas WHERE id_factura = $1", [id_factura]);
+        return { message: "Reserva eliminada correctamente" };
+    } catch (error) {
+        console.error("Error en el servicio eliminarFactura", error.message);
+        throw new Error(`Error al eliminar una factura: ${error.message}`);
+    }
 };
