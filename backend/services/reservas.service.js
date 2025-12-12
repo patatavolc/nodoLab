@@ -2,25 +2,42 @@ import pool from "../database/db.js";
 
 //Crear nueva reserva
 export const newReserva = async (data) => {
-    const { id_cliente, id_recurso, fecha_inicio, fecha_fin } = data;
+    try {
+        const { id_cliente, id_recurso, fecha_inicio, fecha_fin } = data;
 
-    const result = await pool.query(
-        "INSERT INTO reservas(id_cliente, id_recurso, fecha_inicio, fecha_fin) VALUES ($1, $2, $3, $4) RETURNING *",
-        [id_cliente, id_recurso, fecha_inicio, fecha_fin]
-    );
-    return result.rows[0];
+        const result = await pool.query(
+            "INSERT INTO reservas(id_cliente, id_recurso, fecha_inicio, fecha_fin) VALUES ($1, $2, $3, $4) RETURNING *",
+            [id_cliente, id_recurso, fecha_inicio, fecha_fin]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio newReserva", error.message);
+        throw new Error(`Error al crear una nueva reserva: ${error.message}`);
+    }
 };
 
 // Obtener todas las reservas
 export const getReservas = async () => {
-    const result = await pool.query("SELECT * FROM reservas ORDER BY fecha_inicio DESC");
-    return result.rows;
+    try {
+        const result = await pool.query("SELECT * FROM reservas ORDER BY fecha_inicio DESC");
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getReservas", error.message);
+        throw new Error(`Error al obtener todas las reservas: ${error.message}`);
+    }
 };
 
 // Obtener reserva por ID
 export const getReservaById = async (id_reserva) => {
-    const result = await pool.query("SELECT * FROM reservas WHERE id_reserva = $1", [id_reserva]);
-    return result.rows[0];
+    try {
+        const result = await pool.query("SELECT * FROM reservas WHERE id_reserva = $1", [
+            id_reserva,
+        ]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio getReservaById", error.message);
+        throw new Error(`Error al obtener una reserva por id: ${error.message}`);
+    }
 };
 
 // Obtener reservas por ID de usuario
