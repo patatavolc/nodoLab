@@ -107,25 +107,40 @@ export const actualizarPago = async (id_pago, data) => {
 
 // Marcar/desmarcar devolución
 export const marcarDevolucion = async (id_pago, valor = true) => {
-    const resultado = await pool.query(
-        `UPDATE pagos SET devolucion = $1 WHERE id_pago = $2 RETURNING *`,
-        [valor, id_pago]
-    );
-    return resultado.rows[0];
+    try {
+        const resultado = await pool.query(
+            `UPDATE pagos SET devolucion = $1 WHERE id_pago = $2 RETURNING *`,
+            [valor, id_pago]
+        );
+        return resultado.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio marcarDevolucion", error.message);
+        throw new Error(`Error al marcar/desmarcar devolucion: ${error.message}`);
+    }
 };
 
 // Verificar si existe un pago para una reserva
 export const existePagoParaReserva = async (id_reserva) => {
-    const resultado = await pool.query(`SELECT 1 FROM pagos WHERE id_reserva = $1 LIMIT 1`, [
-        id_reserva,
-    ]);
-    return resultado.rowCount > 0;
+    try {
+        const resultado = await pool.query(`SELECT 1 FROM pagos WHERE id_reserva = $1 LIMIT 1`, [
+            id_reserva,
+        ]);
+        return resultado.rowCount > 0;
+    } catch (error) {
+        console.error("Error en el servicio existePagoParaReserva", error.message);
+        throw new Error(`Error al verificar si existe un pago para una reserva: ${error.message}`);
+    }
 };
 
 // Eliminar pago
 export const eliminarPago = async (id_pago) => {
-    const resultado = await pool.query(`DELETE FROM pagos WHERE id_pago = $1 RETURNING *`, [
-        id_pago,
-    ]);
-    return resultado.rows[0];
+    try {
+        const resultado = await pool.query(`DELETE FROM pagos WHERE id_pago = $1 RETURNING *`, [
+            id_pago,
+        ]);
+        return resultado.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio eliminarPago", error.message);
+        throw new Error(`Error al eliminar un pago: ${error.message}`);
+    }
 };
