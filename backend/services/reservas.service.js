@@ -114,23 +114,34 @@ export const updateEstadoReserva = async (id_reserva, nuevoEstado) => {
 
 // Cancelar una reserva
 export const cancelarReserva = async (id_reserva) => {
-    const result = await pool.query(
-        "UPDATE reservas SET estado = 'cancelada' WHERE id_reserva = $1 RETURNING *",
-        [id_reserva]
-    );
-    return result.rows[0];
+    try {
+        const result = await pool.query(
+            "UPDATE reservas SET estado = 'cancelada' WHERE id_reserva = $1 RETURNING *",
+            [id_reserva]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio cancelarReserva", error.message);
+        throw new Error(`Error al cancelar una reserva: ${error.message}`);
+    }
 };
 
 // Eliminar una reserva
 export const eliminarReserva = async (id_reserva) => {
-    await pool.query("DELETE FROM reservas WHERE id_reserva = $1", [id_reserva]);
-    return { message: "Reserva eliminada correctamente" };
+    try {
+        await pool.query("DELETE FROM reservas WHERE id_reserva = $1", [id_reserva]);
+        return { message: "Reserva eliminada correctamente" };
+    } catch (error) {
+        console.error("Error en el servicio eliminarReserva", error.message);
+        throw new Error(`Error al eliminar una reserva: ${error.message}`);
+    }
 };
 
 // Obtener las reservas recientes
 export const getReservasRecientes = async () => {
-    const result = await pool.query(
-        `SELECT 
+    try {
+        const result = await pool.query(
+            `SELECT 
             r.id_reserva, 
             r.fecha_inicio, 
             r.fecha_fin, 
@@ -142,14 +153,23 @@ export const getReservasRecientes = async () => {
         JOIN recursos rec ON r.id_recurso = rec.id_recurso 
         ORDER BY r.fecha_inicio DESC 
         LIMIT 5`
-    );
-    return result.rows;
+        );
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getReservasRecientes", error.message);
+        throw new Error(`Error al obtener las reservas recientes: ${error.message}`);
+    }
 };
 
 // Obtener estadisticas de reservas por estado
 export const getEstadisticasReservasPorEstado = async () => {
-    const result = await pool.query(
-        "SELECT estado COUNT(*) as cantidad FROM reservas GROUP BY estado"
-    );
-    return result.rows;
+    try {
+        const result = await pool.query(
+            "SELECT estado COUNT(*) as cantidad FROM reservas GROUP BY estado"
+        );
+        return result.rows;
+    } catch (error) {
+        console.error("Error en el servicio getEstadisticasReservasPorEstado", error.message);
+        throw new Error(`Error al obtener estadisticas de reservas por estado: ${error.message}`);
+    }
 };
