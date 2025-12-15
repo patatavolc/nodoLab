@@ -1,4 +1,9 @@
-import {newDatoBancario} from '../services/datosBancarios.service.js';
+import {
+    newDatoBancario,
+    getDatosBancariosService,
+    getDatosBancariosByDniService,
+    updateDatosBancariosService
+} from '../services/datosBancarios.service.js';
 
 //Crear dato bancario
 export const createDatoBancario = (req, res) => {
