@@ -1,4 +1,9 @@
-import {newDatoBancario} from '../services/datosBancarios.service.js';
+import {
+    newDatoBancario,
+    getDatosBancariosService,
+    getDatosBancariosByDniService,
+    updateDatosBancariosService
+} from '../services/datosBancarios.service.js';
 
 //Crear dato bancario
 export const createDatoBancario = (req, res) => {
@@ -35,8 +40,7 @@ export const getDatosBancariosByDni = (req, res) => {
     const dni = req.params.dni;
 
     if(dni){
-
-        getDatosBancariosByDniService()
+        getDatosBancariosByDniService(dni)
             .then((detatosBancarios) =>{
                 res.status(200).send(detatosBancarios);
             })
@@ -54,9 +58,9 @@ export const updateDatosBancarios = (req, res) => {
     const data = req.body;
     const idDatosBancarios = req.params.idDatosBancarios;
 
-    updateDetallesFacturaService(idDatosBancarios, data)
-        .then((updatedDetosBancarios) =>{
-            res.status(200).send(updatedDetosBancarios);
+    updateDatosBancariosService(idDatosBancarios, data)
+        .then((updatedDatosBancarios) =>{
+            res.status(200).send(updatedDatosBancarios);
         })
         .catch((error) => {
             res.status(400).send({error: error.message});
