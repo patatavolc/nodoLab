@@ -39,3 +39,32 @@ export const getDatosBancariosByDniService = async (dni) => {
         throw new Error(`Error al obtener datos bancarios por DNI: ${error.message}`);
     }
 };
+
+// Actualizar datos bancarios
+export const updateDatosBancariosService = async (id_dato_bancario, data) => {
+    try {
+        const { IBAN, num_tarjeta, fecha_tarjeta, CVV } = data;
+
+        const query = `
+        UPDATE datos_bancarios
+        SET 
+            IBAN = COALESCE($1, IBAN),
+            num_tarjeta = COALESCE($2, num_tarjeta),
+            fecha_tarjeta = COALESCE($3, fecha_tarjeta),
+            CVV = COALESCE($4, CVV)
+        WHERE id_dato_bancario = $5
+        RETURNING *`;
+
+        const result = await pool.query(query, [
+            IBAN,
+            num_tarjeta,
+            fecha_tarjeta,
+            CVV,
+            id_dato_bancario,
+        ]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio updateDatosBancariosService", error.message);
+        throw new Error(`Error al actualizar datos bancarios: ${error.message}`);
+    }
+};
