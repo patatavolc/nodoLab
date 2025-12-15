@@ -40,8 +40,7 @@ export const getDatosBancariosByDni = (req, res) => {
     const dni = req.params.dni;
 
     if(dni){
-
-        getDatosBancariosByDniService()
+        getDatosBancariosByDniService(dni)
             .then((detatosBancarios) =>{
                 res.status(200).send(detatosBancarios);
             })
