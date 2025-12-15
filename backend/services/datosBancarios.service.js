@@ -68,3 +68,14 @@ export const updateDatosBancariosService = async (id_dato_bancario, data) => {
         throw new Error(`Error al actualizar datos bancarios: ${error.message}`);
     }
 };
+
+// Eliminar datos bancarios
+export const eliminarDatoBancario = async (id_dato_bancario) => {
+    try {
+        await pool.query("DELETE FROM datos_bancarios WHERE id_dato_bancario = $1", [id_dato_bancario]);
+        return { message: "Dato bancario eliminado correctamente" };
+    } catch (error) {
+        console.error("Error en el servicio eliminarDatoBancario", error.message);
+        throw new Error(`Error al eliminar un dato bancario: ${error.message}`);
+    }
+};
