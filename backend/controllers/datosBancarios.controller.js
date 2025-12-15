@@ -58,9 +58,9 @@ export const updateDatosBancarios = (req, res) => {
     const data = req.body;
     const idDatosBancarios = req.params.idDatosBancarios;
 
-    updateDetallesFacturaService(idDatosBancarios, data)
-        .then((updatedDetosBancarios) =>{
-            res.status(200).send(updatedDetosBancarios);
+    updateDatosBancariosService(idDatosBancarios, data)
+        .then((updatedDatosBancarios) =>{
+            res.status(200).send(updatedDatosBancarios);
         })
         .catch((error) => {
             res.status(400).send({error: error.message});
