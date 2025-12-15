@@ -26,3 +26,16 @@ export const getDatosBancariosService = async () => {
         throw new Error(`Error al obtener todos los datos bancarios: ${error.message}`);
     }
 };
+
+// Obtener datos bancarios por DNI
+export const getDatosBancariosByDniService = async (dni) => {
+    try {
+        const result = await pool.query("SELECT * FROM datos_bancarios WHERE id_usuario = $1", [
+            dni,
+        ]);
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error en el servicio getDatosBancariosByDniService", error.message);
+        throw new Error(`Error al obtener datos bancarios por DNI: ${error.message}`);
+    }
+};
