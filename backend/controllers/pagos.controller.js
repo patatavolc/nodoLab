@@ -39,7 +39,7 @@ export const getPagoById = (req, res) => {
     const idPago = req.params.idPago;
 
     if (idPago) {
-        obtenerPagoPorId()
+        obtenerPagoPorId(idPago)
             .then((pago) => {
                 res.status(200).send(pago);
             })
@@ -56,7 +56,7 @@ export const getPagoByIdReserva = (req, res) => {
     const idReserva = req.params.idReserva;
 
     if (idReserva) {
-        existePagoParaReserva()
+        existePagoParaReserva(idReserva)
             .then((pago) => {
                 res.status(200).send(pago);
             })
@@ -67,12 +67,13 @@ export const getPagoByIdReserva = (req, res) => {
         res.status(400).send({ error: "Faltan datos obligatorios" });
     }
 };
+
 //Obtener pago by metodo
 export const getPagosByMetodoPago = (req, res) => {
     const metodoPago = req.params.metodoPago;
 
     if (metodoPago) {
-        getPagoByMetodoService()
+        getPagoByMetodoService(metodoPago)
             .then((pago) => {
                 res.status(200).send(pago);
             })
