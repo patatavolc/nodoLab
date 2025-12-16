@@ -194,11 +194,23 @@ export const updateReserva = (req, res) => {
     const data = req.body;
     const id_reserva = req.params.id_reserva;
 
-    updateReservaService(id_reserva, data)
-        .then((updatedReserva) => {
-            res.status(200).send(updatedReserva);
-        })
-        .catch((error) => {
-            res.status(400).send({ error: error.message });
-        });
+    try {
+        // Validar ID de reserva
+        if (!id_reserva || !Number.isInteger(Number(id_reserva)) || Number(id_reserva) <= 0) {
+            throw new Error("ID de reserva inválido: debe ser un número entero positivo");
+        }
+
+        // Validar datos de actualización (segundo parámetro en true indica que es actualización)
+        validarReserva(data, true);
+
+        updateReservaService(id_reserva, data)
+            .then((updatedReserva) => {
+                res.status(200).send(updatedReserva);
+            })
+            .catch((error) => {
+                res.status(500).send({ error: error.message });
+            });
+    } catch (error) {
+        return res.status(400).send({ error: error.message });
+    }
 };
