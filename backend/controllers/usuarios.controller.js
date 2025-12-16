@@ -54,7 +54,7 @@ export const updateUsuario = (req, res) => {
     const data = req.body;
     const dniUsuario = req.params.dniUsuario;
 
-    updateReservaService(dniUsuario, data)
+    updateUsuarioService(dniUsuario, data)
         .then((updatedUsuario) => {
             res.status(200).send(updatedUsuario);
         })

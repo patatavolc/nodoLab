@@ -5,7 +5,7 @@ import { getRecursos, getRecursoById, createRecurso, updateRecurso, getRecursosB
 
 router.get('/recursos', getRecursos);
 router.get('/recursos/:id', getRecursoById);
-router.get('/recursos/:tipo', getRecursosByTipo);
+router.get('/recursos/tipo/:tipo', getRecursosByTipo);
 router.post('/recursos', createRecurso);
 router.put('/recursos/:id', updateRecurso);
 

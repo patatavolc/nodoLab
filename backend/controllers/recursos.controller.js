@@ -3,6 +3,7 @@ import {
     getAllRecursosService,
     getRecursoByIdService,
     getRecursosByTipoService,
+    updateRecurso,
 } from "../services/recursos.service.js";
 
 //Crear nuevo recurso
@@ -38,7 +39,7 @@ export const getRecursoById = (req, res) => {
     const idRecurso = req.params.idRecurso;
 
     if (idRecurso) {
-        getRecursoByIdService()
+        getRecursoByIdService(idRecurso)
             .then((recurso) => {
                 res.status(200).send(recurso);
             })
@@ -52,10 +53,10 @@ export const getRecursoById = (req, res) => {
 
 //Obtener recurso by id tipo
 export const getRecursosByTipo = (req, res) => {
-    const idRecurso = req.params.idRecurso;
+    const tipo = req.params.tipo;
 
-    if (idRecurso) {
-        getRecursosByTipoService()
+    if (tipo) {
+        getRecursosByTipoService(tipo)
             .then((recurso) => {
                 res.status(200).send(recurso);
             })
@@ -72,7 +73,7 @@ export const updateRecurso = (req, res) => {
     const data = req.body;
     const idRecurso = req.params.idRecurso;
 
-    updatePagoService(idRecurso, data)
+    updateRecurso(idRecurso, data)
         .then((updatedRecurso) => {
             res.status(200).send(updatedRecurso);
         })

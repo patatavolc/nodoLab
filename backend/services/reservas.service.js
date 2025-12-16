@@ -3,11 +3,11 @@ import pool from "../database/db.js";
 //Crear nueva reserva
 export const newReserva = async (data) => {
     try {
-        const { id_cliente, id_recurso, fecha_inicio, fecha_fin } = data;
+        const { id_usuario, id_recurso, fecha_inicio, fecha_fin } = data;
 
         const result = await pool.query(
-            "INSERT INTO reservas(id_cliente, id_recurso, fecha_inicio, fecha_fin) VALUES ($1, $2, $3, $4) RETURNING *",
-            [id_cliente, id_recurso, fecha_inicio, fecha_fin]
+            "INSERT INTO reservas(id_usuario, id_recurso, fecha_inicio, fecha_fin) VALUES ($1, $2, $3, $4) RETURNING *",
+            [id_usuario, id_recurso, fecha_inicio, fecha_fin]
         );
         return result.rows[0];
     } catch (error) {
@@ -149,7 +149,7 @@ export const getReservasRecientes = async () => {
             u.nombre_completo as cliente, 
             rec.nombre as recurso 
         FROM reservas r 
-        JOIN usuarios u ON r.id_cliente = u.id_usuario_dni 
+        JOIN usuarios u ON r.id_usuario = u.id_usuario_dni 
         JOIN recursos rec ON r.id_recurso = rec.id_recurso 
         ORDER BY r.fecha_inicio DESC 
         LIMIT 5`
@@ -165,7 +165,7 @@ export const getReservasRecientes = async () => {
 export const getEstadisticasReservasPorEstado = async () => {
     try {
         const result = await pool.query(
-            "SELECT estado COUNT(*) as cantidad FROM reservas GROUP BY estado"
+            "SELECT estado, COUNT(*) as cantidad FROM reservas GROUP BY estado"
         );
         return result.rows;
     } catch (error) {

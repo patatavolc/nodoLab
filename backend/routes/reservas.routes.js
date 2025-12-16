@@ -5,10 +5,10 @@ import { getReservas, getReservaId, getReservaByDni, postReserva, updateReserva,
 
 router.get('/reservas', getReservas);
 router.get('/reservas/:id', getReservaId);
-router.get('/reservas/:dni', getReservaByDni);
-router.get('/reservas/:idRecurso', getReservaByRecurso);
-router.get('/reservas/:fecha', getReservaByFecha);
+router.get('/reservas/usuario/:dni', getReservaByDni);
+router.get('/reservas/recurso/:idRecurso', getReservaByRecurso);
+router.get('/reservas/fecha/:fecha', getReservaByFecha);
 router.post('/reservas', postReserva);
 router.put('/reservas', updateReserva);
 
-export default router; 
+export default router;
