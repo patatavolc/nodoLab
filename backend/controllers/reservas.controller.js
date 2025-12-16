@@ -173,16 +173,19 @@ export const getReservaByFecha = (req, res) => {
 export const postReserva = (req, res) => {
     const data = req.body;
 
-    if (data.id_recurso) {
-        newReservaService(data)
+    try {
+        // Validar datos antes de crear la reserva
+        validarReserva(data);
+
+        newReserva(data)
             .then((newReserva) => {
                 res.status(201).send(newReserva);
             })
             .catch((error) => {
-                res.status(400).send({ error: error.message });
+                res.status(500).send({ error: error.message });
             });
-    } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+    } catch (error) {
+        return res.status(400).send({ error: error.message });
     }
 };
 
