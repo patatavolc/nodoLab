@@ -103,69 +103,94 @@ export const getReservas = (req, res) => {
 
 //Obtener reserva por id
 export const getReservaId = (req, res) => {
-    const id = req.body.id;
+    const id = req.params.id;
 
-    if (id) {
+    try {
+        // Validar ID
+        if (!id || !Number.isInteger(Number(id)) || Number(id) <= 0) {
+            throw new Error("ID de reserva inválido: debe ser un número entero positivo");
+        }
+
         getReservaIdService(id)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
             .catch((error) => {
-                res.status(400).send({ error: error.message });
+                res.status(500).send({ error: error.message });
             });
-    } else {
-        res.status(400).send({ error: "Id incorrecto" });
+    } catch (error) {
+        return res.status(400).send({ error: error.message });
     }
 };
 
 // Obtener reserva por dni
 export const getReservaByDni = (req, res) => {
-    const dni = req.body.dni;
+    const dni = req.params.dni;
 
-    if (dni) {
+    try {
+        // Validar DNI
+        if (!dni || typeof dni !== "string" || dni.length !== 9) {
+            throw new Error("DNI inválido: debe tener exactamente 9 caracteres");
+        }
+
         getReservaDni(dni)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
             .catch((error) => {
-                res.status(400).send({ error: error.message });
+                res.status(500).send({ error: error.message });
             });
-    } else {
-        res.status(400).send({ error: "Dni erroneo" });
+    } catch (error) {
+        return res.status(400).send({ error: error.message });
     }
 };
 
-//Obtener reserva por id
+//Obtener reserva por recurso
 export const getReservaByRecurso = (req, res) => {
-    const idRecurso = req.body.idRecurso;
+    const idRecurso = req.params.idRecurso;
 
-    if (idRecurso) {
+    try {
+        // Validar ID de recurso
+        if (!idRecurso || !Number.isInteger(Number(idRecurso)) || Number(idRecurso) <= 0) {
+            throw new Error("ID de recurso inválido: debe ser un número entero positivo");
+        }
+
         getReservaIdRecursoService(idRecurso)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
             .catch((error) => {
-                res.status(400).send({ error: error.message });
+                res.status(500).send({ error: error.message });
             });
-    } else {
-        res.status(400).send({ error: "Id incorrecto" });
+    } catch (error) {
+        return res.status(400).send({ error: error.message });
     }
 };
 
 //Obtener reservas por fecha
 export const getReservaByFecha = (req, res) => {
-    const fechaReserva = req.body.fecha_inicio;
+    const fechaReserva = req.params.fecha;
 
-    if (fechaReserva) {
+    try {
+        // Validar formato de fecha
+        if (!fechaReserva) {
+            throw new Error("La fecha es obligatoria");
+        }
+
+        const fecha = new Date(fechaReserva);
+        if (isNaN(fecha.getTime())) {
+            throw new Error("Formato de fecha inválido");
+        }
+
         getReservaFechaService(fechaReserva)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
             .catch((error) => {
-                res.status(400).send({ error: error.message });
+                res.status(500).send({ error: error.message });
             });
-    } else {
-        res.status(400).send({ error: "Fecha erronea" });
+    } catch (error) {
+        return res.status(400).send({ error: error.message });
     }
 };
 
