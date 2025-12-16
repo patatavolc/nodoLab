@@ -1,6 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
+import authRoutes from './auth.js';
 import usuariosRoutes from './usuarios.routes.js';
 import datosBancariosRoutes from './datosBancarios.routes.js';
 import recursosRoutes from './recursos.routes.js';
@@ -11,6 +12,7 @@ import detallesFacturasRoutes from './detallesFacturas.routes.js';
 //import mensajesRoutes from './mensajes.routes.js';
 //import logsRoutes from './logs.routes.js';
 
+router.use('/auth', authRoutes);
 router.use(usuariosRoutes);
 router.use(datosBancariosRoutes);
 router.use(recursosRoutes);
