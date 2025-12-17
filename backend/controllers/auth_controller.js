@@ -35,7 +35,7 @@ const aviableCredentials = async (dni, username, email, telefono, nombreCompleto
     return true;
 };
 
-export const registerUser = async (req, res) => {
+export const registerUser = async (req, res, next) => {
     const { dni, username, email, telefono, nombreCompleto, password } = req.body;
 
     try {
@@ -68,7 +68,7 @@ export const registerUser = async (req, res) => {
             });
         }
     } catch (err) {
-        return res.status(409).json({ error: err.message });
+        next(err);
     }
 };
 
@@ -90,40 +90,46 @@ function passwordToHash(password, salt) {
     return passwordHash;
 }
 
-export const generateLoginToken = async (req, res) => {
+export const generateLoginToken = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     let unsanitizedUser;
+    try {
+        if (!email || !password) {
+            return next(new Error("Email y contraseña son obligatorias"));
+        }
 
-    if (!email || !password) return null;
+        if (email.includes("@")) {
+            unsanitizedUser = await logByMail(email);
+        } else {
+            unsanitizedUser = await logByName(email);
+        }
 
-    if (email.includes("@")) {
-        unsanitizedUser = await logByMail(email);
-    } else {
-        unsanitizedUser = await logByName(email);
+        if (!unsanitizedUser || unsanitizedUser == null) return null;
+
+        if (passwordToHash(password, unsanitizedUser.salt) !== unsanitizedUser.password_hash)
+            return false;
+
+        const fingerPrint = generateFingerprint(req);
+        const user = {
+            id_usuario_dni: unsanitizedUser.id_usuario_dni,
+            rol: unsanitizedUser.rol,
+            nombre_completo: unsanitizedUser.nombre_completo,
+            username: unsanitizedUser.username,
+            telefono: unsanitizedUser.telefono,
+            email: unsanitizedUser.email,
+        };
+        const payload = { user, fingerPrint };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
+
+        return res.json({ token });
+    } catch (err) {
+        next(err);
     }
-
-    if (!unsanitizedUser || unsanitizedUser == null) return null;
-
-    if (passwordToHash(password, unsanitizedUser.salt) !== unsanitizedUser.password_hash) return false;
-
-    const fingerPrint = generateFingerprint(req);
-    const user = {
-        id_usuario_dni: unsanitizedUser.id_usuario_dni,
-        rol: unsanitizedUser.rol,
-        nombre_completo: unsanitizedUser.nombre_completo,
-        username: unsanitizedUser.username,
-        telefono: unsanitizedUser.telefono,
-        email: unsanitizedUser.email
-    }
-    const payload = { user, fingerPrint };
-
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
-
-    return res.json({ token });
 };
 
 export const getUserFromAuthHeader = async (req, res) => {
     const user = req.user;
-    return res.json({user});
+    return res.json({ user });
 };
