@@ -1,7 +1,13 @@
-//import {} from '../services/detallesFacturas.services.js';
+// import {
+//     newDetallesFactura,
+//     getAllDetallesFacturas,
+//     getDetallesFacturaById,
+//     getDetallesFacturaByIdPago,
+//     updateDetallesFactura
+// } from '../services/detallesFacturas.services.js';
 
 //Crear factura
-export const createDetallesFactura = (req, res) => {
+export const createDetallesFactura = (req, res, next) => {
     const data = req.body;
 
     if (data.id_factura) {
@@ -9,27 +15,23 @@ export const createDetallesFactura = (req, res) => {
             .then((detallesFactura) => {
                 res.status(201).send(detallesFactura);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Obtener todos detalles de facturas
-export const getDetallesFacturas = (req, res) => {
+export const getDetallesFacturas = (req, res, next) => {
     getAllDetallesFacturasService()
         .then((detallesFactura) => {
             res.send(detallesFactura);
         })
-        .catch((error) => {
-            res.status(500).send({ error: error.message });
-        });
+        .catch(next);
 };
 
 //Obtener detalles factura por id
-export const getDetallesFacturaById = (req, res) => {
+export const getDetallesFacturaById = (req, res, next) => {
     const idDetalleFactura = req.params.idDetalleFactura;
 
     if (id) {
@@ -37,16 +39,14 @@ export const getDetallesFacturaById = (req, res) => {
             .then((detallesFactura) => {
                 res.status(200).send(detallesFactura);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Obtener detalles by id Pago
-export const getDetallesFacturaByIdPago = (req, res) => {
+export const getDetallesFacturaByIdPago = (req, res, next) => {
     const idPago = req.params.idPago;
 
     if (id) {
@@ -54,16 +54,14 @@ export const getDetallesFacturaByIdPago = (req, res) => {
             .then((idPago) => {
                 res.status(200).send(idPago);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Actualizar detalles facturas
-export const updateDetallesFactura = (req, res) => {
+export const updateDetallesFactura = (req, res, next) => {
     const data = req.body;
     const idDetallesFactura = req.params.idDetallesFactura;
 
@@ -71,7 +69,5 @@ export const updateDetallesFactura = (req, res) => {
         .then((updatedDetallesFactura) => {
             res.status(200).send(updatedDetallesFactura);
         })
-        .catch((error) => {
-            res.status(400).send({ error: error.message });
-        });
+        .catch(next);
 };
