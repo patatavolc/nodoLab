@@ -4,6 +4,7 @@ import {
     getRecursoByIdService,
     getRecursosByTipoService,
     updateRecurso,
+    getRecursosDisponiblesService,
 } from "../services/recursos.service.js";
 
 //Crear nuevo recurso
@@ -80,4 +81,20 @@ export const updateRecurso = (req, res) => {
         .catch((error) => {
             res.status(400).send({ error: error.message });
         });
+};
+
+export const getRecursosDisponibles = async (req, res) => {
+    try {
+        const { fecha_inicio, fecha_fin } = req.query;
+
+        // Validacion
+        if (!fecha_inicio || !fecha_fin) {
+            return res.status(400).json({ error: "Se requiere de fecha_inicio y fecha_fin" });
+        }
+
+        const recursos = await getRecursosDisponiblesService(fecha_inicio, fecha_fin);
+        res.status(200).json(recursos);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
