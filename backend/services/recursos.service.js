@@ -203,3 +203,16 @@ export const getTasaOcupacionRecursos = async () => {
         throw new Error(`Error al obtener la tasa de ocupacion de los recursos: ${error.message}`);
     }
 };
+
+export const getRecursosDisponiblesService = async (fecha_inicio, fecha_fin) => {
+    try {
+        const result = await pool.query("SELECT * FROM ObetenerrecursosDisponibles($1, $2)", [
+            fecha_inicio,
+            fecha_fin,
+        ]);
+        return result.rows;
+    } catch (error) {
+        console.error("Error en getRecursosDisponiblesService", error.message);
+        throw new Error(`Error al buscar disponibilidad: ${error.message}`);
+    }
+};
