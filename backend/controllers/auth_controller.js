@@ -93,21 +93,29 @@ function passwordToHash(password, salt) {
 export const generateLoginToken = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    let user;
+    let unsanitizedUser;
 
     if (!email || !password) return null;
 
     if (email.includes("@")) {
-        user = await logByMail(email);
+        unsanitizedUser = await logByMail(email);
     } else {
-        user = await logByName(email);
+        unsanitizedUser = await logByName(email);
     }
 
-    if (!user || user == null) return null;
+    if (!unsanitizedUser || unsanitizedUser == null) return null;
 
-    if (passwordToHash(password, user.salt) !== user.password_hash) return false;
+    if (passwordToHash(password, unsanitizedUser.salt) !== unsanitizedUser.password_hash) return false;
 
     const fingerPrint = generateFingerprint(req);
+    const user = {
+        id_usuario_dni: unsanitizedUser.id_usuario_dni,
+        rol: unsanitizedUser.rol,
+        nombre_completo: unsanitizedUser.nombre_completo,
+        username: unsanitizedUser.username,
+        telefono: unsanitizedUser.telefono,
+        email: unsanitizedUser.email
+    }
     const payload = { user, fingerPrint };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d" });
