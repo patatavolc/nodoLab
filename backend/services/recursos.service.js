@@ -206,7 +206,7 @@ export const getTasaOcupacionRecursos = async () => {
 
 export const getRecursosDisponiblesService = async (fecha_inicio, fecha_fin) => {
     try {
-        const result = await pool.query("SELECT * FROM ObetenerrecursosDisponibles($1, $2)", [
+        const result = await pool.query("SELECT * FROM ObtenerRecursosDisponibles($1, $2)", [
             fecha_inicio,
             fecha_fin,
         ]);

@@ -11,9 +11,11 @@ import {
 } from "../controllers/recursos.controller.js";
 
 router.get("/recursos", getRecursos);
-router.get("/recursos/:id", getRecursoById);
-router.get("/recursos/tipo/:tipo", getRecursosByTipo);
 router.get("/recursos/disponibles", getRecursosDisponibles);
+
+router.get("/recursos/tipo/:tipo", getRecursosByTipo);
+router.get("/recursos/:id", getRecursoById);
+
 router.post("/recursos", createRecurso);
 router.put("/recursos/:id", updateRecurso);
 
