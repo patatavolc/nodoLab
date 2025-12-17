@@ -3,7 +3,8 @@ import {
     getAllRecursosService,
     getRecursoByIdService,
     getRecursosByTipoService,
-    updateRecurso,
+    updateRecurso as updaterecursoService,
+    getRecursosDisponiblesService,
 } from "../services/recursos.service.js";
 
 //Crear nuevo recurso
@@ -36,10 +37,10 @@ export const getRecursos = (req, res) => {
 
 //Obtener recurso por id
 export const getRecursoById = (req, res) => {
-    const idRecurso = req.params.idRecurso;
+    const id = req.params.id;
 
-    if (idRecurso) {
-        getRecursoByIdService(idRecurso)
+    if (id) {
+        getRecursoByIdService(id)
             .then((recurso) => {
                 res.status(200).send(recurso);
             })
@@ -73,11 +74,27 @@ export const updateRecurso = (req, res) => {
     const data = req.body;
     const idRecurso = req.params.idRecurso;
 
-    updateRecurso(idRecurso, data)
+    updateRecursoService(idRecurso, data)
         .then((updatedRecurso) => {
             res.status(200).send(updatedRecurso);
         })
         .catch((error) => {
             res.status(400).send({ error: error.message });
         });
+};
+
+export const getRecursosDisponibles = async (req, res) => {
+    try {
+        const { fecha_inicio, fecha_fin } = req.query;
+
+        // Validacion
+        if (!fecha_inicio || !fecha_fin) {
+            return res.status(400).json({ error: "Se requiere de fecha_inicio y fecha_fin" });
+        }
+
+        const recursos = await getRecursosDisponiblesService(fecha_inicio, fecha_fin);
+        res.status(200).json(recursos);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
