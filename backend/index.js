@@ -6,6 +6,7 @@ import initializeSocket from "./sockets/manager.socket.js";
 import mainRouter from "./routes/mainRouter.js";
 import cors from "cors";
 import logger from "./middleware/logger.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 const PORT = 3000;
@@ -31,9 +32,10 @@ initializeSocket(io);
 
 app.use(express.json());
 
-app.use("/api", mainRouter);
 app.use(logger);
+app.use("/api", mainRouter);
 
+app.use(errorHandler);
 app.get("/", (req, res) => {
     res.send("🚀 Servidor Express funcionando. Prueba la ruta /api/usuarios");
 });

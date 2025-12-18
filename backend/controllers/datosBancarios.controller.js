@@ -3,84 +3,71 @@ import {
     getDatosBancariosService,
     getDatosBancariosByDniService,
     updateDatosBancariosService,
-    eliminarDatoBancario
-} from '../services/datosBancarios.service.js';
+    eliminarDatoBancario,
+} from "../services/datosBancarios.service.js";
 
 //Crear dato bancario
-export const createDatoBancario = (req, res) => {
+export const createDatoBancario = (req, res, next) => {
     const data = req.body;
 
-    if(data.id_usuario){
+    if (data.id_usuario) {
         newDatoBancario(data)
             .then((newDatoBancarioService) => {
                 res.status(200).send(newDatoBancarioService);
             })
-            .catch((error) => {
-                res.status(400).send({error: error.message});
-            });
-            
-    } else{
-        res.status(400).send({error: 'Faltan datos obligatorios'});
+            .catch(next);
+    } else {
+        return next(new Error("Faltan datos obligatorios"));
     }
-}
+};
 
-//Obtener detos bancarios 
-export const getDatosBancarios = (req, res) => {
-    
-        getDatosBancariosService()
-            .then((detatosBancarios) =>{
-                res.status(200).send(detatosBancarios);
-            })
-            .catch((error) => {
-                res.status(500).send({error: error.message});
-            })
-}
+//Obtener detos bancarios
+export const getDatosBancarios = (req, res, next) => {
+    getDatosBancariosService()
+        .then((detatosBancarios) => {
+            res.status(200).send(detatosBancarios);
+        })
+        .catch(next);
+};
 
 //Obtener detos bancarios por id
-export const getDatosBancariosByDni = (req, res) => {
+export const getDatosBancariosByDni = (req, res, next) => {
     const dni = req.params.dni;
 
-    if(dni){
+    if (dni) {
         getDatosBancariosByDniService(dni)
-            .then((detatosBancarios) =>{
+            .then((detatosBancarios) => {
                 res.status(200).send(detatosBancarios);
             })
-            .catch((error) => {
-                res.status(400).send({error: error.message});
-            })
-        } else {
-            res.status(400).send({error:'Faltan datos obligatorios'});
+            .catch(next);
+    } else {
+        return next(new Error("Faltan datos obligatorios"));
     }
-}
-
+};
 
 //Actualizar datos bancarios
-export const updateDatosBancarios = (req, res) => {
+export const updateDatosBancarios = (req, res, next) => {
     const data = req.body;
     const idDatosBancarios = req.params.idDatosBancarios;
 
     updateDatosBancariosService(idDatosBancarios, data)
-        .then((updatedDatosBancarios) =>{
+        .then((updatedDatosBancarios) => {
             res.status(200).send(updatedDatosBancarios);
         })
-        .catch((error) => {
-            res.status(400).send({error: error.message});
-        });
-}
+        .catch(next);
+};
 
 // Eliminar dato bancario
-export const deleteDatoBancario = (req, res) => {
+export const deleteDatoBancario = (req, res, next) => {
     const idDatoBancario = req.params.idDatoBancario;
 
-    if(idDatoBancario){
+    if (idDatoBancario) {
         eliminarDatoBancario(idDatoBancario)
             .then((result) => {
                 res.status(200).send(result);
             })
-            .catch((error) => {
-                res.status(400).send({error: error.message});
-            });
+            .catch(next);
     } else {
-        res.status(400).send({error: 'Faltan datos obligatorios'});
+        return next(new Error("Faltan datos obligatorios"));
     }
-}
+};

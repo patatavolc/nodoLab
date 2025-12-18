@@ -6,7 +6,7 @@ import {
 } from "../services/facturas.service.js";
 
 //Crear Factura
-export const createFactura = (req, res) => {
+export const createFactura = (req, res, next) => {
     const data = req.body;
 
     if (data.id_reserva) {
@@ -14,27 +14,23 @@ export const createFactura = (req, res) => {
             .then((newFactura) => {
                 res.status(201).send(newFactura);
             })
-            .catch((error) => {
-                res.stauts(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 // obtener facturas
-export const getFacturas = (req, res) => {
+export const getFacturas = (req, res, next) => {
     getAllFacturas()
         .then((facturas) => {
             res.send(facturas);
         })
-        .catch((error) => {
-            res.status(500).send({ error: error.message });
-        });
+        .catch(next);
 };
 
 //Obtener Factura por id
-export const getFacturaById = (req, res) => {
+export const getFacturaById = (req, res, next) => {
     const id = req.params.id;
 
     if (id) {
@@ -42,16 +38,14 @@ export const getFacturaById = (req, res) => {
             .then((factura) => {
                 res.status(201).send(factura);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Obtener Factura por fecha
-export const getFacturaByFecha = (req, res) => {
+export const getFacturaByFecha = (req, res, next) => {
     const fechaFactura = req.body.fechaFactura;
 
     if (idReserva) {
@@ -59,29 +53,25 @@ export const getFacturaByFecha = (req, res) => {
             .then((factura) => {
                 res.status(200).send(factura);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Obtener facturas por metodo de Factura
-export const getFacturasByTipo = (req, res) => {
+export const getFacturasByTipo = (req, res, next) => {
     const metodoFactura = req.params.metodoFactura;
 
     getFacturasByTipoService(metodoFactura)
         .then((facturas) => {
             res.status(200).send(facturas);
         })
-        .catch((error) => {
-            res.status(400).send({ error: error.message });
-        });
+        .catch(next);
 };
 
 //Actualizar facturas
-export const updateFactura = (req, res) => {
+export const updateFactura = (req, res, next) => {
     const data = req.body;
     const idFactura = req.params.idFactura;
 
@@ -89,7 +79,5 @@ export const updateFactura = (req, res) => {
         .then((updatedFactura) => {
             res.status(200).send(updatedFactura);
         })
-        .catch((error) => {
-            res.status(400).send({ error: error.message });
-        });
+        .catch(next);
 };

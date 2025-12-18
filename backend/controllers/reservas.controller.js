@@ -24,7 +24,10 @@ const validarReserva = (data, esActualizacion = false) => {
         if (!data.id_recurso && !esActualizacion) {
             throw new Error("El ID del recurso es obligatorio");
         }
-        if (data.id_recurso && (!Number.isInteger(Number(data.id_recurso)) || Number(data.id_recurso) <= 0)) {
+        if (
+            data.id_recurso &&
+            (!Number.isInteger(Number(data.id_recurso)) || Number(data.id_recurso) <= 0)
+        ) {
             throw new Error("ID de recurso inválido: debe ser un número entero positivo");
         }
     }
@@ -61,9 +64,7 @@ const validarReserva = (data, esActualizacion = false) => {
     if (data.estado) {
         const estadosValidos = ["pendiente", "confirmada", "completada", "cancelada"];
         if (!estadosValidos.includes(data.estado)) {
-            throw new Error(
-                `Estado inválido: debe ser uno de ${estadosValidos.join(", ")}`
-            );
+            throw new Error(`Estado inválido: debe ser uno de ${estadosValidos.join(", ")}`);
         }
     }
 
@@ -71,7 +72,7 @@ const validarReserva = (data, esActualizacion = false) => {
 };
 
 // Crear una reserva
-export const createReserva = (req, res) => {
+export const createReserva = (req, res, next) => {
     const data = req.body;
 
     try {
@@ -82,120 +83,108 @@ export const createReserva = (req, res) => {
             .then((newReservaService) => {
                 res.status(201).send(newReservaService);
             })
-            .catch((error) => {
-                res.status(500).send({ error: error.message });
-            });
+            .catch(next);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
 };
 
 //Obtener reservas
-export const getReservas = (req, res) => {
+export const getReservas = (req, res, next) => {
     getAllReservas()
         .then((reservas) => {
             res.send(reservas);
         })
-        .catch((error) => {
-            res.status(500).send({ error: error.message });
-        });
+        .catch(next);
 };
 
 //Obtener reserva por id
-export const getReservaId = (req, res) => {
+export const getReservaId = (req, res, next) => {
     const id = req.params.id;
 
     try {
         // Validar ID
         if (!id || !Number.isInteger(Number(id)) || Number(id) <= 0) {
-            throw new Error("ID de reserva inválido: debe ser un número entero positivo");
+            return next(new Error("Id de reserva invalido: debe ser un numero entero positivo"));
         }
 
         getReservaIdService(id)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
-            .catch((error) => {
-                res.status(500).send({ error: error.message });
-            });
+            .catch(next);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
 };
 
 // Obtener reserva por dni
-export const getReservaByDni = (req, res) => {
+export const getReservaByDni = (req, res, next) => {
     const dni = req.params.dni;
 
     try {
         // Validar DNI
         if (!dni || typeof dni !== "string" || dni.length !== 9) {
-            throw new Error("DNI inválido: debe tener exactamente 9 caracteres");
+            return next(new Error("DNI invalido: debe tener exactamente 9 caracteres"));
         }
 
         getReservaDni(dni)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
-            .catch((error) => {
-                res.status(500).send({ error: error.message });
-            });
+            .catch(next);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
 };
 
 //Obtener reserva por recurso
-export const getReservaByRecurso = (req, res) => {
+export const getReservaByRecurso = (req, res, next) => {
     const idRecurso = req.params.idRecurso;
 
     try {
         // Validar ID de recurso
         if (!idRecurso || !Number.isInteger(Number(idRecurso)) || Number(idRecurso) <= 0) {
-            throw new Error("ID de recurso inválido: debe ser un número entero positivo");
+            return next(new Error("id de recurso invalido: debe ser un numero entero positivo"));
         }
 
         getReservaIdRecursoService(idRecurso)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
-            .catch((error) => {
-                res.status(500).send({ error: error.message });
-            });
+            .catch(next);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
 };
 
 //Obtener reservas por fecha
-export const getReservaByFecha = (req, res) => {
+export const getReservaByFecha = (req, res, next) => {
     const fechaReserva = req.params.fecha;
 
     try {
         // Validar formato de fecha
         if (!fechaReserva) {
-            throw new Error("La fecha es obligatoria");
+            return next(new Error("La fecha es obligatoria"));
         }
 
         const fecha = new Date(fechaReserva);
         if (isNaN(fecha.getTime())) {
-            throw new Error("Formato de fecha inválido");
+            return next(new Error("Formato de fecha invalido"));
         }
 
         getReservaFechaService(fechaReserva)
             .then((reservas) => {
                 res.status(200).send(reservas);
             })
-            .catch((error) => {
-                res.status(500).send({ error: error.message });
-            });
+            .catch(next);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
 };
 
 // Crear reserva
-export const postReserva = (req, res) => {
+export const postReserva = (req, res, next) => {
     const data = req.body;
 
     try {
@@ -206,23 +195,21 @@ export const postReserva = (req, res) => {
             .then((newReserva) => {
                 res.status(201).send(newReserva);
             })
-            .catch((error) => {
-                res.status(500).send({ error: error.message });
-            });
+            .catch(next);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
 };
 
 //Actualizar reserva
-export const updateReserva = (req, res) => {
+export const updateReserva = (req, res, next) => {
     const data = req.body;
     const id_reserva = req.params.id_reserva;
 
     try {
         // Validar ID de reserva
         if (!id_reserva || !Number.isInteger(Number(id_reserva)) || Number(id_reserva) <= 0) {
-            throw new Error("ID de reserva inválido: debe ser un número entero positivo");
+            return next(new Error("ID de reserva invalido: debe ser un numero entero positivo"));
         }
 
         // Validar datos de actualización (segundo parámetro en true indica que es actualización)
@@ -232,9 +219,7 @@ export const updateReserva = (req, res) => {
             .then((updatedReserva) => {
                 res.status(200).send(updatedReserva);
             })
-            .catch((error) => {
-                res.status(500).send({ error: error.message });
-            });
+            .catch(next);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }

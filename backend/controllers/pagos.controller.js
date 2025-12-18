@@ -7,7 +7,7 @@ import {
 } from "../services/pagos.service.js";
 
 //Crear nuevo pago
-export const createPago = (req, res) => {
+export const createPago = (req, res, next) => {
     const data = req.body;
 
     if (data.id_reserva) {
@@ -15,27 +15,23 @@ export const createPago = (req, res) => {
             .then((newPagoService) => {
                 res.status(200).send(newPagoService);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Obtener todos pagos
-export const getPagos = (req, res) => {
+export const getPagos = (req, res, next) => {
     obtenerPagos()
         .then((pagos) => {
             res.send(pagos);
         })
-        .catch((error) => {
-            res.status(500).send({ error: error.message });
-        });
+        .catch(next);
 };
 
 //Obtener pago por id
-export const getPagoById = (req, res) => {
+export const getPagoById = (req, res, next) => {
     const idPago = req.params.idPago;
 
     if (idPago) {
@@ -43,16 +39,14 @@ export const getPagoById = (req, res) => {
             .then((pago) => {
                 res.status(200).send(pago);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Obtener pago by id reserva
-export const getPagoByIdReserva = (req, res) => {
+export const getPagoByIdReserva = (req, res, next) => {
     const idReserva = req.params.idReserva;
 
     if (idReserva) {
@@ -60,16 +54,14 @@ export const getPagoByIdReserva = (req, res) => {
             .then((pago) => {
                 res.status(200).send(pago);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Obtener pago by metodo
-export const getPagosByMetodoPago = (req, res) => {
+export const getPagosByMetodoPago = (req, res, next) => {
     const metodoPago = req.params.metodoPago;
 
     if (metodoPago) {
@@ -77,16 +69,14 @@ export const getPagosByMetodoPago = (req, res) => {
             .then((pago) => {
                 res.status(200).send(pago);
             })
-            .catch((error) => {
-                res.status(400).send({ error: error.message });
-            });
+            .catch(next);
     } else {
-        res.status(400).send({ error: "Faltan datos obligatorios" });
+        return next(new Error("Faltan datos obligatorios"));
     }
 };
 
 //Actualizar pago
-export const updatePago = (req, res) => {
+export const updatePago = (req, res, next) => {
     const data = req.body;
     const idPago = req.params.idPago;
 
@@ -94,7 +84,5 @@ export const updatePago = (req, res) => {
         .then((updatedPago) => {
             res.status(200).send(updatedPago);
         })
-        .catch((error) => {
-            res.status(400).send({ error: error.message });
-        });
+        .catch(next);
 };

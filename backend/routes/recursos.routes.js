@@ -1,4 +1,4 @@
-import express from 'express'; 
+import express from "express";
 const router = express.Router();
 
 import { getRecursos, getRecursoById, createRecurso, updateRecurso, getRecursosByTipo} from '../controllers/recursos.controller.js'; 
