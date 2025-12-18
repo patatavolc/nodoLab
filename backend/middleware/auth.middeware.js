@@ -31,3 +31,17 @@ export function authMiddleware(req, res, next) {
         // frontend should clear localStorage + redirect to login
     }
 }
+
+export function isAdmin(req, res, next) {
+    /*
+    Correr este middleware SIEMPRE DEPUES de authMiddleWare por que si no req.user no existira vale corazones? Se añade  en la linea 23 de este mismo archivo.
+    */
+
+    const user = req.user;
+
+    if (!user || user == null) return res.json({ error: "No user found on the request." });
+
+    const rol = user.rol;
+    if (rol !== "admin") return res.json({ error: "User is not an administrator" });
+    else next();
+}
