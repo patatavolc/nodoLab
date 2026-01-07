@@ -9,9 +9,9 @@ import {
 } from "../controllers/usuarios.controller.js";
 import { authMiddleware, isAdmin } from "../middleware/auth.middeware.js";
 
-router.get("/usuarios", getUsuarios);
 router.get("/usuarios/:id", getUsuarioByDni);
-router.post("/usuarios", createUsuario);
 router.put("/usuarios/:id", authMiddleware, isAdmin, updateUsuario);
+router.get("/usuarios", getUsuarios);
+router.post("/usuarios", createUsuario);
 
 export default router;
