@@ -188,7 +188,7 @@ export const getUsuariosMasActivos = async () => {
         u.rol,
         COUNT(r.id_reserva) as total_reservas
         FROM usuarios u
-        LEFT JOIN reservas r ON u.id_usuario_dni = r.id_cliente
+        LEFT JOIN reservas r ON u.id_usuario_dni = r.id_usuario
         GROUP BY u.id_usuario_dni, u.nombre_completo, u.email
         ORDER BY total_reservas DESC
         LIMIT 5`);
