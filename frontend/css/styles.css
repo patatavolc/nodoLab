@@ -1,0 +1,56 @@
+:root {
+    --bg: #f8fafc;
+    --section-bg: #002657;
+
+    --text-primary: #00132d;
+    --text-secondary: #475569;
+
+    --button-bg: #f59e0b;
+    --button-hover: #00377e;
+    --button-hover-accent: #d97706;
+    --button-text: #ffffff;
+
+    --border: #002d67;
+
+    --succes: #10b981;
+    --error: #ef4444;
+    --warning: #f59e0b;
+
+    --surface-card: #ffffff;
+    --shadow: rgba(0, 19, 45, 0.08);
+
+    --font-main: "Montserrat", sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+.login-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: var(--section-bg);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px var(--shadow);
+    border-radius: 12px;
+}
+
+.login-box h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: var(--button-text);
+    text-align: center;
+    font-weight: 700;
+}
+
+.login-box .user-box input {
+    width: 100%;
+    padding: ;
+}
