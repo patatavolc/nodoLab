@@ -2,7 +2,7 @@
 import { apiFetch } from "./api";
 
 export async function login(nameOrMail, password) {
-    const res = await fetch("/api/login", {
+    const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -23,6 +23,6 @@ export async function login(nameOrMail, password) {
 }
 
 export async function getUserData() {
-    const data = await apiFetch("/api/userdata");
+    const data = await apiFetch("/api/auth/userdata");
     return data.user;
 }
