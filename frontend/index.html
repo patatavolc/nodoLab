@@ -5,21 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <title>NodoLab</title>
+    <title>NodoLab - Login</title>
 </head>
 
 <body>
     <div class="login-box">
         <h2>Acceso Clientes</h2>
-        <form>
+        <form id="login-form">
             <div class="user-box">
-                <input type="text" name="" required="">
-                <label>Usuario</label>
+                <input type="text" id="email" name="email" required="">
+                <label>Usuario o Email</label>
             </div>
             <div class="user-box">
-                <input type="password" name="" required="">
+                <input type="password" id="password" name="password" required="">
                 <label>Contraseña</label>
             </div>
+            <div id="error-message" style="color: #ef4444; text-align: center; margin: 10px 0; display: none;"></div>
             <a href="#">
                 <span></span>
                 <span></span>
@@ -29,6 +30,8 @@
             </a>
         </form>
     </div>
+
+    <script type="module" src="js/login.js"></script>
 </body>
 
 </html>
