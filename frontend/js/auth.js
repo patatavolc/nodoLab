@@ -16,5 +16,6 @@ export async function login(nameOrMail, password) {
     const data = await res.json();
     localStorage.setItem("nodoLabAuthToken", data.token);
 
+    if(data) window.location.replace("/dashboard.html");
     return data ?? new Error("Error desconocido xd");
 }
